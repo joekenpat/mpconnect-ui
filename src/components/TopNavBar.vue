@@ -90,8 +90,8 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img v-if="user" class="avatar-image" :src="$user?.img_url" />
-              {{ $user?.first_name }} <span class="fa fa-caret-down"></span>
+              <img v-if="user" class="avatar-image" :src="user?.img_url" />
+              {{ user?.first_name }} <span class="fa fa-caret-down"></span>
             </a>
             <ul
               v-if="dropDownMenuLinks.length > 0"
@@ -126,6 +126,7 @@ export default {
           text: "home",
         },
       ],
+      user: null
     };
   },
 };

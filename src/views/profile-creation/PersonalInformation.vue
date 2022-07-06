@@ -184,10 +184,10 @@ export default {
           </multiselect>
         </div>
         <div class="form-group col-sm-12">
-          <label for="pwd">HANDS ON TECHNOLOGY</label>
+          <label for="handsOnTechnology">HANDS ON TECHNOLOGY</label>
           <multiselect
-            id="hot"
-            name="hot"
+            id="handsOnTechnology"
+            name="handsOnTechnology"
             :multiple="true"
             :searchable="true"
             :close-on-select="false"
