@@ -1,66 +1,3 @@
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<script lang="ts">
-import Multiselect from "vue-multiselect";
-import avatar from "@/assets/avatar.png";
-export default {
-  data() {
-    return {
-      avatarPlaceholder: avatar,
-      handsOnTechnologyOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-      ],
-      genderOptions: ["male", "female"],
-      countryOptions: ["nigeria", "uae"],
-      yearsOfWorkExperienceOptions: ["2", "3", "4", "5"],
-      countryOfWorkExperienceOptions: ["2", "3", "4", "5"],
-      languageOptions: ["English", "Vernacular"],
-      utmMediumOptions: [
-        "Reference",
-        "LinkedIn",
-        "Google",
-        "Promotional Email",
-        "Invitation",
-      ],
-      personalInfo: {
-        name: "",
-        avatar: null,
-        gender: "",
-        dob: "",
-        country: "",
-        handsOnTechnology: [],
-        address: "",
-        phone1: "",
-        phone2: "",
-        yearsOfWorkExperience: "",
-        countryOfWorkExperience: "",
-        utmMediumOption: "",
-        referee: "",
-        languages: [
-          {
-            language: "",
-            proficiency: "",
-          },
-        ],
-      },
-    };
-  },
-  components: { Multiselect },
-  methods: {
-    removeHandsOnTechnologyValue(index: number): void {
-      this.personalInfo.handsOnTechnology.splice(index, 1);
-    },
-    addPersonalInfoLanguage(): void {
-      this.personalInfo.languages.push({
-        language: "",
-        proficiency: "",
-      });
-    },
-  },
-};
-</script>
 <template>
   <div class="PC-grid2">
     <div class="PC-grid2-div1">
@@ -250,8 +187,8 @@ export default {
           <div class="form-group col-sm-12" :key="i + 'language'">
             <label for="language">SELECT LANGUAGE</label>
             <multiselect
-              :id="`language[${i}]`"
-              :name="`language[${i}]`"
+              :id="`language_${i}`"
+              :name="`language_${i}`"
               placeholder="Select your language"
               v-model="personalInfo.languages[i].language"
               :options="languageOptions"
@@ -309,3 +246,66 @@ export default {
   </div>
   <!--PC-grid2 closing tag-->
 </template>
+<script lang="ts">
+import Multiselect from "vue-multiselect";
+import avatar from "@/assets/avatar.png";
+export default {
+  data() {
+    return {
+      avatarPlaceholder: avatar,
+      handsOnTechnologyOptions: [
+        "Adobe illustrator",
+        "Sketch",
+        "PHP Development",
+        "WordPress",
+      ],
+      genderOptions: ["male", "female"],
+      countryOptions: ["nigeria", "uae"],
+      yearsOfWorkExperienceOptions: ["2", "3", "4", "5"],
+      countryOfWorkExperienceOptions: ["2", "3", "4", "5"],
+      languageOptions: ["English", "Vernacular"],
+      utmMediumOptions: [
+        "Reference",
+        "LinkedIn",
+        "Google",
+        "Promotional Email",
+        "Invitation",
+      ],
+      personalInfo: {
+        name: "",
+        avatar: "" as undefined | string | Blob | File,
+        gender: "",
+        dob: "",
+        country: "",
+        handsOnTechnology: [],
+        address: "",
+        phone1: "",
+        phone2: "",
+        yearsOfWorkExperience: "",
+        countryOfWorkExperience: "",
+        utmMediumOption: "",
+        referee: "",
+        languages: [
+          {
+            language: "",
+            proficiency: "",
+          },
+        ],
+      },
+    };
+  },
+  components: { Multiselect },
+  methods: {
+    removeHandsOnTechnologyValue(index: number): void {
+      this.personalInfo.handsOnTechnology.splice(index, 1);
+    },
+    addPersonalInfoLanguage(): void {
+      this.personalInfo.languages.push({
+        language: "",
+        proficiency: "",
+      });
+    },
+  },
+};
+</script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
