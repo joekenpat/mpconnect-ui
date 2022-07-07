@@ -15,7 +15,7 @@ const router = new VueRouter({
       path: "/profile-creation",
       name: "profile-creation",
       component: () => import("@/views/profile-creation/index.vue"),
-      redirect: '/profile-creation/personal-information',
+      redirect: "/profile-creation/personal-information",
       children: [
         {
           path: "personal-information",
@@ -26,14 +26,12 @@ const router = new VueRouter({
         {
           path: "short-bio",
           name: "profile-creation-short-bio",
-          component: () =>
-            import("@/views/profile-creation/ShortBio.vue"),
+          component: () => import("@/views/profile-creation/ShortBio.vue"),
         },
         {
           path: "work-history",
           name: "profile-creation-work-history",
-          component: () =>
-            import("@/views/profile-creation/WorkHistory.vue"),
+          component: () => import("@/views/profile-creation/WorkHistory.vue"),
         },
         {
           path: "project-reference",
@@ -42,16 +40,12 @@ const router = new VueRouter({
             import("@/views/profile-creation/ProjectReference.vue"),
         },
         {
-          path: "industry-experience",
-          name: "profile-creation-industry-experience",
+          path: "industry-and-functional-expertise",
+          name: "profile-creation-industry-and-functional-expertise",
           component: () =>
-            import("@/views/profile-creation/IndustryExperience.vue"),
-        },
-        {
-          path: "functional-skills",
-          name: "profile-creation-functional-skills",
-          component: () =>
-            import("@/views/profile-creation/FunctionalSkills.vue"),
+            import(
+              "@/views/profile-creation/IndustryAndFunctionalExpertise.vue"
+            ),
         },
         {
           path: "time-availability",

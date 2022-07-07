@@ -1,11 +1,16 @@
 @font-face {
 	font-family: main;
-	src: url('css/font/Graphik-Font-Family/GraphikRegular.otf');
+	src: url('./Graphik-Font-Family/GraphikRegular.otf');
 }
 @font-face {
 	font-family: main-bold;
 	font-weight: bold;
-	src: url('css/font/Graphik-Font-Family/GraphikBold.otf');
+	src: url('./Graphik-Font-Family/GraphikBold.otf');
+}
+@font-face {
+	font-family: main;
+	font-weight: bold;
+	src: url('./Graphik-Font-Family/GraphikBold.otf');
 }
 /* Header Style */
 /* Footer Style */
@@ -41,7 +46,7 @@
 	margin: 0;
 	padding: 0;
 }
-html {
+html, body {
 	font-family: main, serif !important;
 }
 nav {
@@ -297,6 +302,9 @@ body {
 }
 .red-font {
 	color: #e43232;
+}
+.yellow-font {
+  color: #e7ac2c;
 }
 .white-font {
 	color: #fff;

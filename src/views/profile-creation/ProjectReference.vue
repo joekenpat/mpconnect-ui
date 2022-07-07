@@ -119,7 +119,7 @@
           Save the above information to continue to next step.
         </p>
         <router-link
-          :to="{ name: 'profile-creation-industry-experience' }"
+          :to="{ name: 'profile-creation-industry-and-functional-expertise' }"
           v-slot="{ href, navigate }"
         >
           <button

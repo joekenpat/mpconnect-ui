@@ -22,12 +22,12 @@
     <div class="PC-form-container">
       <div class="PC-form-list" id="step1-form-list">
         <router-link
-          v-for="(menulink, i) in menuLinks"
-          :to="menulink.route"
+          v-for="(menuLink, i) in menuLinks"
+          :to="menuLink.route"
           :key="i"
-          :class="[currentRoutePath === menulink.route && 'active']"
-          ><span class="fa fa-check-circle"></span>
-          {{ menulink.text }}</router-link
+          :class="[currentRoutePath === menuLink.route && 'active']"
+          ><span :class="menuLinkClass(menuLink.status)"></span>
+          {{ menuLink.text }}</router-link
         >
       </div>
     </div>
@@ -36,9 +36,10 @@
 </template>
 <script lang="ts">
 interface IMenuLink {
-  route: string,
-  text: string,
-  progress: number
+  route: string;
+  text: string;
+  progress: number;
+  status: "completed" | "warning" | "not-started";
 }
 export default {
   data() {
@@ -48,46 +49,49 @@ export default {
           route: "/profile-creation/personal-information",
           text: "Personal Information",
           progress: 0,
+          status: "completed",
         },
         {
           route: "/profile-creation/short-bio",
           text: "Short Bio (CV Summary)",
           progress: 10,
+          status: "completed",
         },
         {
           route: "/profile-creation/work-history",
           text: "Work History",
           progress: 20,
+          status: "warning",
         },
         {
           route: "/profile-creation/project-reference",
           text: "Project References",
           progress: 30,
+          status: "not-started",
         },
         {
-          route: "/profile-creation/industry-experience",
-          text: "Industry Experience",
+          route: "/profile-creation/industry-and-functional-expertise",
+          text: "Industry and Functional Expertise",
           progress: 40,
-        },
-        {
-          route: "/profile-creation/functional-skills",
-          text: "Functional Skills",
-          progress: 50,
+          status: "not-started",
         },
         {
           route: "/profile-creation/time-availability",
           text: "Time Availability",
           progress: 60,
+          status: "not-started",
         },
         {
           route: "/profile-creation/awards-and-certification",
           text: "Awards and Certification",
           progress: 80,
+          status: "not-started",
         },
         {
           route: "/profile-creation/interest-and-contribution",
           text: "Interest and Contributions",
           progress: 90,
+          status: "not-started",
         },
       ] as IMenuLink[],
       currentRoutePath: "personal-information",
@@ -96,14 +100,26 @@ export default {
   computed: {
     currentMenuProgress(): number {
       return (
-        this.menuLinks.find(({ route }) => {return route === this.currentRoutePath})
-          ?.progress || 0
+        this.menuLinks.find(({ route }) => {
+          return route === this.currentRoutePath;
+        })?.progress || 0
       );
     },
   },
   watch: {
     $route(to, _) {
       this.currentRoutePath = to.path;
+    },
+  },
+  methods: {
+    menuLinkClass(status: "completed" | "warning" | "not-started"): string {
+      if (status === "completed") {
+        return "fa fa-check-circle red-font";
+      } else if (status === "warning") {
+        return "fa fa-warning yellow-font";
+      } else {
+        return "fa fa-check-circle";
+      }
     },
   },
 };
