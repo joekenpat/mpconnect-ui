@@ -25,9 +25,18 @@ export default {
       <p class="lightgray-font">
         Save the above information to continue to next step.
       </p>
-      <button type="submit" class="btn btn-lg red-background">
-        SAVE & CONTINUE
-      </button>
+      <router-link
+        :to="{ name: 'profile-creation-work-history' }"
+        v-slot="{ href, navigate }"
+      >
+        <button
+          :href="href"
+          @click="navigate"
+          class="btn btn-lg red-background"
+        >
+          SAVE & CONTINUE
+        </button>
+      </router-link>
     </div>
   </div>
   <!--PC-grid2 closing tag-->

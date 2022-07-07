@@ -1,7 +1,7 @@
 <template>
   <div class="PC-grid2">
     <div class="margin-10 row">
-      <form action="/action_page.php">
+      <form>
         <template v-for="(projectReference, pr) in projectReferences">
           <p :key="pr + 'title'" class="work-exp gray-background col-sm-12">
             <span class="badge">{{ pr + 1 }}</span>
@@ -118,9 +118,18 @@
         <p class="lightgray-font">
           Save the above information to continue to next step.
         </p>
-        <button type="submit" class="btn btn-lg red-background">
-          SAVE & CONTINUE
-        </button>
+        <router-link
+          :to="{ name: 'profile-creation-industry-experience' }"
+          v-slot="{ href, navigate }"
+        >
+          <button
+            :href="href"
+            @click="navigate"
+            class="btn btn-lg red-background"
+          >
+            SAVE & CONTINUE
+          </button>
+        </router-link>
       </div>
     </div>
   </div>

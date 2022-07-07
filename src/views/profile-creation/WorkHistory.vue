@@ -1,7 +1,7 @@
 <template>
   <div class="PC-grid2">
     <div class="margin-10 row">
-      <form action="">
+      <form>
         <template v-for="(workExperience, we) in workExperiences">
           <p :key="we + 'title'" class="work-exp gray-background col-sm-12">
             <span class="badge">{{ we + 1 }}</span>
@@ -122,30 +122,35 @@
                 >
               </div>
             </div>
-            <template v-if="!workExperiences[we].currentlyWorkHere">
-              <div class="form-group col-sm-6">
-                <label :for="`endDate_${we}`">END DATE</label>
-                <multiselect
-                  :id="`endDate_${we}`"
-                  :name="`endDate_${we}`"
-                  placeholder="Select end date"
-                  v-model="workExperiences[we].endDate"
-                  :options="endDateOptions"
-                >
-                </multiselect>
-              </div>
-              <div class="form-group col-sm-6">
-                <label :for="`endYear_${we}`">END YEAR</label>
-                <multiselect
-                  :id="`endYear_${we}`"
-                  :name="`endYear_${we}`"
-                  placeholder="Select end year"
-                  v-model="workExperiences[we].endYear"
-                  :options="endYearOptions"
-                >
-                </multiselect>
-              </div>
-            </template>
+            <div
+              v-show="!workExperiences[we].currentlyWorkHere"
+              class="form-group col-sm-6"
+            >
+              <label :for="`endDate_${we}`">END DATE</label>
+              <multiselect
+                :id="`endDate_${we}`"
+                :name="`endDate_${we}`"
+                placeholder="Select end date"
+                v-model="workExperiences[we].endDate"
+                :options="endDateOptions"
+              >
+              </multiselect>
+            </div>
+            <div
+              v-show="!workExperiences[we].currentlyWorkHere"
+              class="form-group col-sm-6"
+            >
+              <label :for="`endYear_${we}`">END YEAR</label>
+              <multiselect
+                :id="`endYear_${we}`"
+                :name="`endYear_${we}`"
+                placeholder="Select end year"
+                v-model="workExperiences[we].endYear"
+                :options="endYearOptions"
+              >
+              </multiselect>
+            </div>
+
             <div class="form-group col-sm-12">
               <label :for="`description_${we}`">DESCRIPTION</label>
               <textarea
@@ -172,9 +177,18 @@
         <p class="lightgray-font">
           Save the above information to continue to next step.
         </p>
-        <button type="submit" class="btn btn-lg red-background">
-          SAVE & CONTINUE
-        </button>
+        <router-link
+          :to="{ name: 'profile-creation-project-reference' }"
+          v-slot="{ href, navigate }"
+        >
+          <button
+            :href="href"
+            @click="navigate"
+            class="btn btn-lg red-background"
+          >
+            SAVE & CONTINUE
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
