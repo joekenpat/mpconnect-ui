@@ -4,7 +4,10 @@
       <p>UPLOAD YOUR PROFILE PICTURE</p>
       <div>
         <img
-          :src="personalInfo.avatar || avatarPlaceholder"
+          :src="
+            personalInformation.personal_information?.profile_image ||
+            avatarPlaceholder
+          "
           class="profile-picture"
           alt="Profile Picture"
         />
@@ -25,7 +28,7 @@
             id="name"
             placeholder="Enter name"
             name="name"
-            v-model="personalInfo.name"
+            v-model="fullName"
           />
         </div>
         <div class="form-group col-sm-6">
@@ -34,7 +37,7 @@
             id="gender"
             name="gender"
             placeholder="Select your gender"
-            v-model="personalInfo.gender"
+            v-model="personalInformation.gender"
             :options="genderOptions"
           >
           </multiselect>
@@ -47,7 +50,7 @@
             id="dob"
             placeholder="Select date of birth"
             name="dob"
-            v-model="personalInfo.dob"
+            v-model="personalInformation.date_of_birth"
           />
         </div>
         <div class="form-group col-sm-6">
@@ -56,7 +59,7 @@
             id="country"
             name="country"
             placeholder="Enter your nationality"
-            v-model="personalInfo.country"
+            v-model="personalInformation.nationality"
             :options="countryOptions"
           >
           </multiselect>
@@ -69,7 +72,7 @@
             id="address"
             placeholder="Current Location (Full Address)"
             name="address"
-            v-model="personalInfo.address"
+            v-model="personalInformation.current_address"
           />
         </div>
         <div class="form-group col-sm-6">
@@ -80,7 +83,7 @@
             id="phone1"
             placeholder="Enter your mobile number"
             name="phone1"
-            v-model="personalInfo.phone1"
+            v-model="personalInformation.mobile_phone"
           />
         </div>
         <div class="form-group col-sm-6">
@@ -91,7 +94,7 @@
             id="phone2"
             placeholder="Enter your fixed line number"
             name="phone2"
-            v-model="personalInfo.phone2"
+            v-model="personalInformation.fixed_phone"
           />
         </div>
         <div class="form-group col-sm-6">
@@ -102,7 +105,7 @@
             id="yearsOfWorkExperience"
             name="yearsOfWorkExperience"
             placeholder="Select total experience"
-            v-model="personalInfo.yearsOfWorkExperience"
+            v-model="personalInformation.years_of_work_experience"
             :options="yearsOfWorkExperienceOptions"
           >
           </multiselect>
@@ -115,7 +118,7 @@
             id="countryOfWorkExperience"
             name="countryOfWorkExperience"
             placeholder="Select number of countries"
-            v-model="personalInfo.countryOfWorkExperience"
+            v-model="personalInformation.countries_of_work_experience"
             :options="countryOfWorkExperienceOptions"
           >
           </multiselect>
@@ -129,7 +132,7 @@
             :searchable="true"
             :close-on-select="false"
             placeholder="Select hands on technology"
-            v-model="personalInfo.handsOnTechnology"
+            v-model="personalInformation.hands_on_technology"
             :options="handsOnTechnologyOptions"
           >
             <template slot="selection" slot-scope="{ values, search, isOpen }"
@@ -146,7 +149,7 @@
             <li
               v-for="(
                 handsOnTechnologyValue, i
-              ) in personalInfo.handsOnTechnology"
+              ) in personalInformation.hands_on_technology"
               :key="i"
             >
               {{ handsOnTechnologyValue }}
@@ -167,7 +170,7 @@
           <multiselect
             id="utmMedium"
             name="utmMedium"
-            v-model="personalInfo.utmMedium"
+            v-model="personalInformation.platform_from"
             :options="utmMediumOptions"
           >
           </multiselect>
@@ -180,17 +183,17 @@
             id="referee"
             placeholder="Enter Referee name"
             name="referee"
-            v-model="personalInfo.referee"
+            v-model="personalInformation.name_of_professional"
           />
         </div>
-        <template v-for="(language, i) in personalInfo.languages">
+        <template v-for="(language, i) in personalInformation.languages">
           <div class="form-group col-sm-12" :key="i + 'language'">
             <label for="language">SELECT LANGUAGE</label>
             <multiselect
               :id="`language_${i}`"
               :name="`language_${i}`"
               placeholder="Select your language"
-              v-model="personalInfo.languages[i].language"
+              v-model="personalInformation.languages[i].name"
               :options="languageOptions"
             >
             </multiselect>
@@ -201,8 +204,8 @@
                 ><input
                   class="product-category-input"
                   type="radio"
-                  :value="'Elementary'"
-                  v-model="personalInfo.languages[i].proficiency"
+                  :value="'elementary'"
+                  v-model="personalInformation.languages[i].fluency"
                 />
                 Elementary</label
               >
@@ -211,8 +214,8 @@
               <label
                 ><input
                   type="radio"
-                  :value="'Professional'"
-                  v-model="personalInfo.languages[i].proficiency"
+                  :value="'professional'"
+                  v-model="personalInformation.languages[i].fluency"
                 />
                 Professional</label
               >
@@ -221,8 +224,8 @@
               <label
                 ><input
                   type="radio"
-                  :value="'Native'"
-                  v-model="personalInfo.languages[i].proficiency"
+                  :value="'native'"
+                  v-model="personalInformation.languages[i].fluency"
                 />
                 Native</label
               >
@@ -233,24 +236,20 @@
       <button
         type="button"
         class="btn btn-block white-background red-border red-font"
-        @click="addPersonalInfoLanguage"
+        @click="addUserPersonalInformationLanguage"
       >
-        <span class="fa fa-plus"></span> ADD ANOTHER LANGUAGE
+        <span class="fa fa-plus"></span> ADD
+        {{ personalInformation.languages?.length > 0 ? "ANOTHER" : "" }}
+        LANGUAGE
       </button>
       <br />
       <p>Save the above information to continue to next step.</p>
-      <router-link
-        :to="{ name: 'profile-creation-short-bio' }"
-        v-slot="{ href, navigate }"
+      <button
+        @click="updateUserPersonalInformation"
+        class="btn btn-lg red-background"
       >
-        <button
-          :href="href"
-          @click="navigate"
-          class="btn btn-lg red-background"
-        >
-          SAVE & CONTINUE
-        </button>
-      </router-link>
+        SAVE & CONTINUE
+      </button>
     </div>
   </div>
   <!--PC-grid2 closing tag-->
@@ -258,10 +257,14 @@
 <script lang="ts">
 import Multiselect from "vue-multiselect";
 import avatar from "@/assets/avatar.png";
+import { $http } from "@/services/http-common";
+import { UserPersonalInfoDTO } from "@/services/UserDTO";
+import { jsonToFormData } from "@/services/JsonToFormData";
 export default {
   data() {
     return {
       avatarPlaceholder: avatar,
+      fullName: "",
       handsOnTechnologyOptions: [
         "Adobe illustrator",
         "Sketch",
@@ -280,39 +283,81 @@ export default {
         "Promotional Email",
         "Invitation",
       ],
-      personalInfo: {
-        name: "",
-        avatar: "" as undefined | string | Blob | File,
-        gender: "",
-        dob: "",
-        country: "",
-        handsOnTechnology: [],
-        address: "",
-        phone1: "",
-        phone2: "",
-        yearsOfWorkExperience: "",
-        countryOfWorkExperience: "",
-        utmMediumOption: "",
-        referee: "",
+      personalInformation: {
         languages: [
           {
-            language: "",
-            proficiency: "",
+            name: "",
+            fluency: "",
           },
         ],
-      },
+      } as UserDTO,
     };
   },
+  watch: {
+    fullName: {
+      handler(val) {
+        const [firstName, ...rest] = val.split(" ");
+        this.personalInformation.first_name = firstName;
+        this.personalInformation.last_name = rest.join(" ");
+      },
+    },
+  },
   components: { Multiselect },
+  created() {
+    this.fetchUserDetail();
+  },
   methods: {
     removeHandsOnTechnologyValue(index: number): void {
-      this.personalInfo.handsOnTechnology.splice(index, 1);
+      this.personalInformation.hands_on_technology.splice(index, 1);
     },
-    addPersonalInfoLanguage(): void {
-      this.personalInfo.languages.push({
-        language: "",
-        proficiency: "",
+    addUserPersonalInformationLanguage(): void {
+      this.personalInformation.languages.push({
+        name: "",
+        fluency: "",
       });
+    },
+    fetchUserDetail(): void {
+      $http
+        .get("/profile")
+        .then(({ data }) => {
+          console.log(new UserPersonalInfoDTO(data.user));
+          this.personalInformation = new UserPersonalInfoDTO(data.user);
+          this.fullName = [
+            this.personalInformation.first_name,
+            this.personalInformation.last_name,
+          ].join(" ");
+        })
+        .catch((error) => {
+          console.error({ error });
+          this.$toast.open({
+            type: "error",
+            message: error.response.data.message,
+            duration: 5000,
+          });
+        });
+    },
+    updateUserPersonalInformation(): void {
+      $http
+        .post(
+          "/profile/update/personal-information",
+          jsonToFormData(this.personalInformation)
+        )
+        .then(({ data }) => {
+          this.$toast.open({
+            type: "success",
+            message: data.message,
+            duration: 5000,
+          });
+          this.$router.push({ name: "profile-creation-short-bio" });
+        })
+        .catch((error) => {
+          console.error({ error });
+          this.$toast.open({
+            type: "error",
+            message: error.response.data.message,
+            duration: 5000,
+          });
+        });
     },
   },
 };

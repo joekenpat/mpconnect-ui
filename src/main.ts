@@ -1,20 +1,15 @@
-// import Vue from 'vue'
-// import VueCompositionAPI, { createApp, h } from '@vue/composition-api'
-
-// import App from './App.vue'
-import router from './router'
-
-// Vue.use(VueCompositionAPI)
-
-// const app = createApp({
-//   router,
-//   render: () => h(App)
-// })
-
-// app.mount('#app')
-
 import Vue from 'vue';
 import App from './App.vue';
+
+import router from './router'
+import VueToast from 'vue-toast-notification';
+// Import one of the available themes
+//import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+
+Vue.use(VueToast);
+
 
 new Vue({
   router,

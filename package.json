@@ -8,13 +8,14 @@
     "typecheck": "vue-tsc --noEmit",
     "serve": "vite preview",
     "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production; npm run build"
-
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.6",
+    "axios": "^0.27.2",
     "vue": "^2.6.14",
     "vue-multiselect": "^2.1.6",
-    "vue-router": "^3.5.3"
+    "vue-router": "^3.5.3",
+    "vue-toast-notification": "^0.6.3"
   },
   "devDependencies": {
     "@types/node": "^16.11.25",
