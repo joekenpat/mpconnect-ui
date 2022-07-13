@@ -32,18 +32,18 @@
               ></textarea>
             </div>
             <div class="form-group col-sm-12">
-              <label :for="`documentFile_${ac}`">ATTACH FILES FOR PROOF</label>
+              <label :for="`proof_file${ac}`">ATTACH FILES FOR PROOF</label>
               <input
                 v-show="false"
                 type="file"
-                :id="`documentFile_${ac}`"
-                :name="`documentFile_${ac}`"
+                :id="`proof_file${ac}`"
+                :name="`proof_file${ac}`"
                 @change="getUploadedDocument(ac)"
               />
               <button
                 type="button"
-                :id="`documentSelector_${ac}`"
-                :name="`documentSelector_${ac}`"
+                :id="`document_selector_${ac}`"
+                :name="`document_selector_${ac}`"
                 @click="handleDocumentSelect(ac)"
                 class="btn btn-block upload-project-document"
               >
@@ -65,64 +65,14 @@
       <p class="lightgray-font">
         Save the above information to continue to next step.
       </p>
-      <router-link
-        :to="{ name: 'profile-creation-interest-and-contribution' }"
-        v-slot="{ href, navigate }"
-      >
         <button
-          :href="href"
-          @click="navigate"
+          @click="updateUserCertifications"
           class="btn btn-lg red-background"
         >
           SAVE & CONTINUE
         </button>
-      </router-link>
     </div>
   </div>
   <!--PC-grid2 closing tag-->
 </template>
-<script lang="ts">
-export default {
-  data() {
-    return {
-      awardsAndCertifications: [
-        {
-          title: "",
-          description: "",
-          documentFile: undefined as undefined | File,
-        },
-      ],
-    };
-  },
-  methods: {
-    addNewAwardAndCertification(): void {
-      this.awardsAndCertifications.push({
-        title: "",
-        description: "",
-        documentFile: undefined as undefined | File,
-      });
-    },
-    getUploadedDocument(referenceIndex: number): void {
-      const el = this.$el.querySelector(
-        `#documentFile_${referenceIndex}`
-      ) as HTMLInputElement;
-      const selectedFile = el.files?.[0];
-
-      this.awardsAndCertifications[referenceIndex].documentFile = selectedFile;
-    },
-    handleDocumentSelect(referenceIndex: number): void {
-      const el = this.$el.querySelector(
-        `#documentFile_${referenceIndex}`
-      ) as HTMLInputElement;
-      if (el) {
-        el.click();
-      }
-    },
-    uploadedFileName(referenceIndex: number): string {
-      const fileSelected =
-        this.awardsAndCertifications[referenceIndex].documentFile;
-      return fileSelected ? fileSelected.name : "Upload your files";
-    },
-  },
-};
-</script>
+<script lang="ts" src="./AwardsAndCertification.ts"></script>

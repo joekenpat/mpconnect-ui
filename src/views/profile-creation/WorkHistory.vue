@@ -2,7 +2,7 @@
   <div class="PC-grid2">
     <div class="margin-10 row">
       <form>
-        <template v-for="(workExperience, we) in workExperiences">
+        <div v-for="(workExperience, we) in workExperiences" :key="we + 'work'">
           <p :key="we + 'title'" class="work-exp gray-background col-sm-12">
             <span class="badge">{{ we + 1 }}</span>
             Work Experience
@@ -17,7 +17,7 @@
                 :id="`employerName_${we}`"
                 placeholder="Enter your employer name"
                 :name="`employerName_${we}`"
-                v-model="workExperiences[we].employerName"
+                v-model="workExperiences[we].employer_name"
               />
             </div>
             <div class="form-group col-sm-6">
@@ -28,7 +28,7 @@
                 :id="`jobTitle_${we}`"
                 placeholder="Enter your job title"
                 :name="`jobTitle_${we}`"
-                v-model="workExperiences[we].jobTitle"
+                v-model="workExperiences[we].job_title"
               />
             </div>
             <div class="form-group col-sm-12">
@@ -53,7 +53,7 @@
                 :searchable="true"
                 :close-on-select="false"
                 placeholder="Select hands on technology"
-                v-model="workExperiences[we].handsOnTechnology"
+                v-model="workExperiences[we].hands_on_technology"
                 :options="handsOnTechnologyOptions"
               >
                 <template
@@ -61,7 +61,7 @@
                   slot-scope="{ values, search, isOpen }"
                   ><span
                     class="multiselect__multiple"
-                    v-if="values.length &amp;&amp; !isOpen"
+                    v-if="values.length && !isOpen"
                     >{{ values.length }} options selected</span
                   ></template
                 >
@@ -71,7 +71,7 @@
               <ul class="technology-list list-inline">
                 <li
                   v-for="(handsOnTechnologyValue, i) in workExperiences[we]
-                    .handsOnTechnology"
+                    .hands_on_technology"
                   :key="i"
                 >
                   {{ handsOnTechnologyValue }}
@@ -91,8 +91,8 @@
                 :id="`startDate_${we}`"
                 :name="`startDate_${we}`"
                 placeholder="Select start date"
-                v-model="workExperiences[we].startDate"
-                :options="startDateOptions"
+                v-model="workExperiences[we].start_month"
+                :options="monthDurationOptions"
               >
               </multiselect>
             </div>
@@ -102,8 +102,8 @@
                 :id="`startYear_${we}`"
                 :name="`startYear_${we}`"
                 placeholder="Select start year"
-                v-model="workExperiences[we].startYear"
-                :options="startYearOptions"
+                v-model="workExperiences[we].start_year"
+                :options="yearDurationOptions"
               >
               </multiselect>
             </div>
@@ -116,14 +116,14 @@
                     :value="true"
                     :id="`currentlyWorkHere_${we}`"
                     :name="`currentlyWorkHere_${we}`"
-                    v-model="workExperiences[we].currentlyWorkHere"
+                    v-model="workExperiences[we].is_current_role"
                   />
                   I am currently working in this role</label
                 >
               </div>
             </div>
             <div
-              v-show="!workExperiences[we].currentlyWorkHere"
+              v-show="!workExperiences[we].is_current_role"
               class="form-group col-sm-6"
             >
               <label :for="`endDate_${we}`">END DATE</label>
@@ -131,13 +131,13 @@
                 :id="`endDate_${we}`"
                 :name="`endDate_${we}`"
                 placeholder="Select end date"
-                v-model="workExperiences[we].endDate"
-                :options="endDateOptions"
+                v-model="workExperiences[we].end_month"
+                :options="monthDurationOptions"
               >
               </multiselect>
             </div>
             <div
-              v-show="!workExperiences[we].currentlyWorkHere"
+              v-show="!workExperiences[we].is_current_role"
               class="form-group col-sm-6"
             >
               <label :for="`endYear_${we}`">END YEAR</label>
@@ -145,8 +145,8 @@
                 :id="`endYear_${we}`"
                 :name="`endYear_${we}`"
                 placeholder="Select end year"
-                v-model="workExperiences[we].endYear"
-                :options="endYearOptions"
+                v-model="workExperiences[we].end_year"
+                :options="yearDurationOptions"
               >
               </multiselect>
             </div>
@@ -163,7 +163,7 @@
               ></textarea>
             </div>
           </div>
-        </template>
+        </div>
       </form>
       <div class="PC-grid2-div2 margin-10">
         <button
@@ -177,90 +177,13 @@
         <p class="lightgray-font">
           Save the above information to continue to next step.
         </p>
-        <router-link
-          :to="{ name: 'profile-creation-project-reference' }"
-          v-slot="{ href, navigate }"
-        >
-          <button
-            :href="href"
-            @click="navigate"
-            class="btn btn-lg red-background"
-          >
-            SAVE & CONTINUE
-          </button>
-        </router-link>
+        <button @click="updateWorkExperiences" class="btn btn-lg red-background">
+        SAVE & CONTINUE
+      </button>
       </div>
     </div>
   </div>
   <!--PC-grid2 closing tag-->
 </template>
-<script lang="ts">
-import Multiselect from "vue-multiselect";
-
-export default {
-  data() {
-    return {
-      workExperiences: [
-        {
-          employerName: "",
-          jobTitle: "",
-          industry: "",
-          handsOnTechnology: [],
-          startDate: "",
-          startYear: "",
-          endDate: "",
-          endYear: "",
-          currentlyWorkHere: false,
-        },
-      ],
-      handsOnTechnologyOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-      ],
-    };
-  },
-  computed: {
-    startDateOptions(): number[] {
-      return this.range(31, 1);
-    },
-    endDateOptions(): number[] {
-      return this.range(31, 1);
-    },
-    startYearOptions(): number[] {
-      return this.range(60, 2022 - 60);
-    },
-    endYearOptions(): number[] {
-      return this.range(60, 2022 - 60);
-    },
-  },
-  components: {
-    Multiselect,
-  },
-  methods: {
-    range(N: number, startAt: number = 1): number[] {
-      return Array(N)
-        .fill(startAt - 1)
-        .map((v, i) => v + (i + 1));
-    },
-    removeHandsOnTechnologyValue(experienceIndex: number, index: number): void {
-      this.workExperiences[experienceIndex].handsOnTechnology.splice(index, 1);
-    },
-    addNewWorkExperience(): void {
-      this.workExperiences.push({
-        employerName: "",
-        jobTitle: "",
-        industry: "",
-        handsOnTechnology: [],
-        startDate: "",
-        startYear: "",
-        endDate: "",
-        endYear: "",
-        currentlyWorkHere: false,
-      });
-    },
-  },
-};
-</script>
+<script lang="ts" src="./WorkHistory.ts"></script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

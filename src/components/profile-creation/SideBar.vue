@@ -49,19 +49,19 @@ export default {
           route: "/profile-creation/personal-information",
           text: "Personal Information",
           progress: 0,
-          status: "completed",
+          status: "not-started",
         },
         {
           route: "/profile-creation/short-bio",
           text: "Short Bio (CV Summary)",
           progress: 10,
-          status: "completed",
+          status: "not-started",
         },
         {
           route: "/profile-creation/work-history",
           text: "Work History",
           progress: 20,
-          status: "warning",
+          status: "not-started",
         },
         {
           route: "/profile-creation/project-reference",

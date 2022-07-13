@@ -1,5 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store/index";
+
+const guest_only_routes = ["/auth", "/auth/sign-up", "/auth/sign-in"];
 
 Vue.use(VueRouter);
 
@@ -9,13 +12,42 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      redirect: "/profile-creation",
+      redirect: "/sign-up",
+      meta: {
+        auth_required: false,
+      },
+    },
+    {
+      path: "/auth/sign-up",
+      name: "sign-up",
+      component: () => import("@/views/SignUp.vue"),
+      meta: {
+        auth_required: false,
+      },
+    },
+    {
+      path: "/auth/sign-in",
+      name: "sign-in",
+      component: () => import("@/views/SignIn.vue"),
+      meta: {
+        auth_required: false,
+      },
+    },
+    {
+      path: "/auth/sign-out",
+      name: "sign-out",
+      meta: {
+        auth_required: true,
+      },
     },
     {
       path: "/profile-creation",
       name: "profile-creation",
       component: () => import("@/views/profile-creation/index.vue"),
       redirect: "/profile-creation/personal-information",
+      meta: {
+        auth_required: true,
+      },
       children: [
         {
           path: "personal-information",
@@ -67,7 +99,39 @@ const router = new VueRouter({
         },
       ],
     },
+    {
+      path: "/profile-creation-summary",
+      name: "profile-creation-summary",
+      component: () => import("@/views/ProfileCreationSummary.vue"),
+      meta: {
+        auth_required: true,
+      },
+    },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const current_user = store.getters.auth_user;
+  const auth_is_required = to.matched.some((x) => x.meta.auth_required);
+
+  if (auth_is_required && !current_user) {
+    next({
+      path: "/auth/sign-in",
+      query: {
+        redirect: to.path,
+      },
+    });
+  } else if (current_user && guest_only_routes.includes(to.path)) {
+    next("/profile-creation");
+  } else if (auth_is_required && current_user) {
+    if (to.path === "/auth/sign-out") {
+      store.dispatch("setAuthUser", undefined);
+      next("/");
+    }
+    next();
+  } else {
+    next();
+  }
 });
 
 export default router;

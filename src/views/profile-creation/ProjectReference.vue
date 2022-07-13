@@ -10,14 +10,14 @@
           <!--Job invitation main closing tag-->
           <div :key="pr + 'form-items'" class="PC-grid2-div2 margin-10">
             <div class="form-group col-sm-6">
-              <label :for="`clientName_${pr}`">CLIENT NAME</label>
+              <label :for="`name_of_client_${pr}`">CLIENT NAME</label>
               <input
                 type="text"
                 class="form-control"
-                :id="`clientName_${pr}`"
+                :id="`name_of_client_${pr}`"
                 placeholder="Enter your employer name"
-                :name="`clientName_${pr}`"
-                v-model="projectReferences[pr].clientName"
+                :name="`name_of_client_${pr}`"
+                v-model="projectReferences[pr].name_of_client"
               />
             </div>
             <div class="form-group col-sm-6">
@@ -43,15 +43,15 @@
               ></textarea>
             </div>
             <div class="form-group col-sm-12">
-              <label :for="`functionalSkills_${pr}`">FUNCTIONAL SKILLS</label>
+              <label :for="`functional_skills_${pr}`">FUNCTIONAL SKILLS</label>
               <multiselect
-                :id="`functionalSkills_${pr}`"
-                :name="`functionalSkills_${pr}`"
+                :id="`functional_skills_${pr}`"
+                :name="`functional_skills_${pr}`"
                 :multiple="true"
                 :searchable="true"
                 :close-on-select="false"
                 placeholder="Select functional skills"
-                v-model="projectReferences[pr].functionalSkills"
+                v-model="projectReferences[pr].functional_skills"
                 :options="functionalSkillsOptions"
               >
                 <template
@@ -69,14 +69,14 @@
               <ul class="technology-list list-inline">
                 <li
                   v-for="(functionalSkillsValue, i) in projectReferences[pr]
-                    .functionalSkills"
+                    .functional_skills"
                   :key="i"
                 >
                   {{ functionalSkillsValue }}
                   <button
                     type="button"
                     class="button x-btn"
-                    @click="removeFunctionalSkillValue(we, i)"
+                    @click="removeFunctionalSkillValue(pr, i)"
                   >
                     <span class="fa fa-times-circle"></span>
                   </button>
@@ -84,18 +84,20 @@
               </ul>
             </div>
             <div class="form-group col-sm-12">
-              <label :for="`documentFile_${pr}`">UPLOAD PROJECT DOCUMENT</label>
+              <label :for="`document_file_${pr}`"
+                >UPLOAD PROJECT DOCUMENT</label
+              >
               <input
                 v-show="false"
                 type="file"
-                :id="`documentFile_${pr}`"
-                :name="`documentFile_${pr}`"
+                :id="`document_file_${pr}`"
+                :name="`document_file_${pr}`"
                 @change="getUploadedDocument(pr)"
               />
               <button
                 type="button"
-                :id="`documentSelector_${pr}`"
-                :name="`documentSelector_${pr}`"
+                :id="`document_selector_${pr}`"
+                :name="`document_selector_${pr}`"
                 @click="handleDocumentSelect(pr)"
                 class="btn btn-block upload-project-document"
               >
@@ -118,81 +120,16 @@
         <p class="lightgray-font">
           Save the above information to continue to next step.
         </p>
-        <router-link
-          :to="{ name: 'profile-creation-industry-and-functional-expertise' }"
-          v-slot="{ href, navigate }"
+        <button
+          @click="updateUserProjectReferences"
+          class="btn btn-lg red-background"
         >
-          <button
-            :href="href"
-            @click="navigate"
-            class="btn btn-lg red-background"
-          >
-            SAVE & CONTINUE
-          </button>
-        </router-link>
+          SAVE & CONTINUE
+        </button>
       </div>
     </div>
   </div>
   <!--PC-grid2 closing tag-->
 </template>
-<script lang="ts">
-import Multiselect from "vue-multiselect";
-
-export default {
-  data() {
-    return {
-      functionalSkillsOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-      ],
-      projectReferences: [
-        {
-          clientName: "",
-          industry: "",
-          description: "",
-          functionalSkills: [],
-          documentFile: undefined as undefined | File,
-        },
-      ],
-    };
-  },
-  components: { Multiselect },
-  methods: {
-    removeFunctionalSkillValue(referenceIndex: number, index: number): void {
-      this.projectReferences[referenceIndex].functionalSkills.splice(index, 1);
-    },
-    addNewProjectReference(): void {
-      this.projectReferences.push({
-        clientName: "",
-        industry: "",
-        description: "",
-        functionalSkills: [],
-        documentFile: undefined as undefined | File,
-      });
-    },
-    getUploadedDocument(referenceIndex: number): void {
-      const el = this.$el.querySelector(
-        `#documentFile_${referenceIndex}`
-      ) as HTMLInputElement;
-      const selectedFile = el.files?.[0];
-
-      this.projectReferences[referenceIndex].documentFile = selectedFile;
-    },
-    handleDocumentSelect(referenceIndex: number): void {
-      const el = this.$el.querySelector(
-        `#documentFile_${referenceIndex}`
-      ) as HTMLInputElement;
-      if (el) {
-        el.click();
-      }
-    },
-    uploadedFileName(referenceIndex: number): string {
-      const fileSelected = this.projectReferences[referenceIndex].documentFile;
-      return fileSelected ? fileSelected.name : "Upload your files";
-    },
-  },
-};
-</script>
+<script lang="ts" src="./ProjectReference.ts"></script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

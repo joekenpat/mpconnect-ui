@@ -4,7 +4,7 @@
       <form>
         <div class="form-group col-sm-12">
           <div class="row">
-            <label for="handsOnTechnology" class="text-left col-sm-6"
+            <label for="industry_experiences" class="text-left col-sm-6"
               >INDUSTRY EXPERIENCE</label
             >
             <p class="text-right red-font col-sm-6">
@@ -12,13 +12,15 @@
             </p>
           </div>
           <multiselect
-            id="handsOnTechnology"
-            name="handsOnTechnology"
+            id="industry_experiences"
+            name="industry_experiences"
             :multiple="true"
             :searchable="true"
             :close-on-select="false"
+            label="name"
+            track-by="name"
             placeholder="Select industry experience"
-            v-model="experiences.handsOnTechnology"
+            v-model="userIndustryAndSkill.industry_experiences"
             :options="handsOnTechnologyOptions"
           >
             <template slot="selection" slot-scope="{ values, search, isOpen }"
@@ -35,14 +37,14 @@
             <li
               v-for="(
                 handsOnTechnologyValue, i
-              ) in experiences.handsOnTechnology"
+              ) in userIndustryAndSkill.industry_experiences"
               :key="i"
             >
-              {{ handsOnTechnologyValue }}
+              {{ handsOnTechnologyValue.name }}
               <button
                 type="button"
                 class="button x-btn"
-                @click="removeHandsOnTechnologyValue(i)"
+                @click="removeIndustryExperienceValue(i)"
               >
                 <span class="fa fa-times-circle"></span>
               </button>
@@ -51,7 +53,7 @@
         </div>
         <div class="form-group col-sm-12">
           <div class="row">
-            <label for="functionalSkills" class="text-left col-sm-6"
+            <label for="functional_skills" class="text-left col-sm-6"
               >FUNCTIONAL SKILLS</label
             >
             <p class="text-right red-font col-sm-6">
@@ -59,13 +61,15 @@
             </p>
           </div>
           <multiselect
-            id="functionalSkills"
-            name="functionalSkills"
+            id="functional_skills"
+            name="functional_skills"
             :multiple="true"
             :searchable="true"
             :close-on-select="false"
+            label="name"
+            track-by="name"
             placeholder="Select functional skills"
-            v-model="experiences.functionalSkills"
+            v-model="userIndustryAndSkill.functional_skills"
             :options="functionalSkillsOptions"
           >
             <template slot="selection" slot-scope="{ values, search, isOpen }"
@@ -80,10 +84,12 @@
         <div class="hands-on-technology col-sm-12">
           <ul class="technology-list list-inline">
             <li
-              v-for="(functionalSkillsValue, i) in experiences.functionalSkills"
+              v-for="(
+                functionalSkillsValue, i
+              ) in userIndustryAndSkill.functional_skills"
               :key="i"
             >
-              {{ functionalSkillsValue }}
+              {{ functionalSkillsValue.name }}
               <button
                 type="button"
                 class="button x-btn"
@@ -100,67 +106,15 @@
       <p class="lightgray-font">
         Save the above information to continue to next step.
       </p>
-      <router-link
-        :to="{ name: 'profile-creation-functional-skills' }"
-        v-slot="{ href, navigate }"
+      <button
+        @click="updateUserIndustryOrSkills"
+        class="btn btn-lg red-background"
       >
-        <button
-          :href="href"
-          @click="navigate"
-          class="btn btn-lg red-background"
-        >
-          SAVE & CONTINUE
-        </button>
-      </router-link>
+        SAVE & CONTINUE
+      </button>
     </div>
   </div>
   <!--PC-grid2 closing tag-->
 </template>
-<script lang="ts">
-import Multiselect from "vue-multiselect";
-
-export default {
-  data() {
-    return {
-      functionalSkillsOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-        "JavaScript",
-        "Python",
-        "UX/UI",
-        "Product Development",
-        "Dev Ops",
-        "Quality Assurance",
-        "Story telling",
-        "Team leader",
-      ],
-      handsOnTechnologyOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-        "Scala",
-        "Vue.js",
-      ],
-      experiences: {
-        handsOnTechnology: [],
-        functionalSkills: [],
-      },
-    };
-  },
-  components: {
-    Multiselect,
-  },
-  methods: {
-    removeHandsOnTechnologyValue(index: number): void {
-      this.experiences.handsOnTechnology.splice(index, 1);
-    },
-    removeFunctionalSkillValue(index: number): void {
-      this.experiences.functionalSkills.splice(index, 1);
-    },
-  },
-};
-</script>
+<script lang="ts" src="./IndustryAndFunctionalExpertise.ts"></script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
