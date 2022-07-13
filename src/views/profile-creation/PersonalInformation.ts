@@ -35,6 +35,7 @@ export default Vue.extend({
           },
         ],
       } as UserPersonalInfoDTO,
+      formErrors: {} as { [key: string]: string[] },
     };
   },
   watch: {
@@ -96,6 +97,9 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
+          if (error.request.status === 422) {
+            this.formErrors = error.response.data.errors;
+          }
           this.$toast.open({
             type: "error",
             message: error.response.data.message,

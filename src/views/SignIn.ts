@@ -16,6 +16,7 @@ export default Vue.extend({
         email: "",
         password: "",
       },
+      formErrors: {} as { [key: string]: string[] },
     };
   },
   computed: {
@@ -39,6 +40,16 @@ export default Vue.extend({
             auth_token: data.token,
           }),
             this.$router.push("/profile-creation/personal-information");
+        }).catch((error) => {
+          console.error({ error });
+          if (error.request.status === 422) {
+            this.formErrors = error.response.data.errors;
+          }
+          this.$toast.open({
+            type: "error",
+            message: error.response.data.message,
+            duration: 5000,
+          });
         });
     },
   },

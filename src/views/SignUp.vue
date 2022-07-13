@@ -22,6 +22,9 @@
             <div class="login-form-group">
               <label>Email</label>
               <input type="email" placeholder="Email" v-model="auth.email" />
+              <template v-for="(msg, fe) in formErrors['email']">
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="login-form-group">
               <label>Password</label>
@@ -30,6 +33,9 @@
                 placeholder="Password"
                 v-model="auth.password"
               />
+              <template v-for="(msg, fe) in formErrors['password']">
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="login-form-group">
               <label>Retype Password</label>

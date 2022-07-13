@@ -7,14 +7,25 @@
       <section class="login-form-section">
         <div class="login-form-container">
           <ul class="log-sign">
-            <li><router-link to="/auth/sign-in" active-class="log-link-active">Login</router-link></li>
-            <li><router-link to="/auth/sign-up" active-class="log-link-active">Sign up</router-link></li>
+            <li>
+              <router-link to="/auth/sign-in" active-class="log-link-active"
+                >Login</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/auth/sign-up" active-class="log-link-active"
+                >Sign up</router-link
+              >
+            </li>
           </ul>
 
           <form class="login-form">
             <div class="login-form-group">
               <label>Email</label>
               <input type="email" placeholder="Email" v-model="auth.email" />
+              <template v-for="(msg, fe) in formErrors['email']">
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="login-form-group">
               <label>Password</label>
@@ -23,9 +34,17 @@
                 placeholder="Password"
                 v-model="auth.password"
               />
+              <template v-for="(msg, fe) in formErrors['password']">
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
-            <button :disabled="!canSubmit" @click="signIn" type="button" class="login-btn">
-             LOGIN
+            <button
+              :disabled="!canSubmit"
+              @click="signIn"
+              type="button"
+              class="login-btn"
+            >
+              LOGIN
             </button>
             <div class="login-options">
               <div>

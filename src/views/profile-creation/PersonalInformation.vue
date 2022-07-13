@@ -4,10 +4,7 @@
       <p>UPLOAD YOUR PROFILE PICTURE</p>
       <div>
         <img
-          :src="
-            personalInformation.personal_information?.profile_image ||
-            avatarPlaceholder
-          "
+          :src="personalInformation?.profile_image || avatarPlaceholder"
           class="profile-picture"
           alt="Profile Picture"
         />
@@ -30,6 +27,12 @@
             name="name"
             v-model="fullName"
           />
+          <template v-for="(msg, fe) in formErrors['first_name']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
+          <template v-for="(msg, fe) in formErrors['last_name']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="gender">GENDER</label>
@@ -41,6 +44,9 @@
             :options="genderOptions"
           >
           </multiselect>
+          <template v-for="(msg, fe) in formErrors['gender']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="dob">DATE OF BIRTH</label>
@@ -52,6 +58,9 @@
             name="dob"
             v-model="personalInformation.date_of_birth"
           />
+          <template v-for="(msg, fe) in formErrors['date_of_birth']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="country">NATIONALITY</label>
@@ -63,6 +72,9 @@
             :options="countryOptions"
           >
           </multiselect>
+          <template v-for="(msg, fe) in formErrors['nationality']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-12">
           <label for="pwd">CURRENT LOCATION</label>
@@ -74,6 +86,9 @@
             name="address"
             v-model="personalInformation.current_address"
           />
+          <template v-for="(msg, fe) in formErrors['current_address']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="phone1">MOBILE PHONE NUMBER</label>
@@ -85,6 +100,9 @@
             name="phone1"
             v-model="personalInformation.mobile_phone"
           />
+          <template v-for="(msg, fe) in formErrors['mobile_phone']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="phone">FIXED LINE</label>
@@ -96,6 +114,9 @@
             name="phone2"
             v-model="personalInformation.fixed_phone"
           />
+          <template v-for="(msg, fe) in formErrors['fixed_phone']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="yearOfWorkExperience"
@@ -109,6 +130,9 @@
             :options="yearsOfWorkExperienceOptions"
           >
           </multiselect>
+          <template v-for="(msg, fe) in formErrors['years_or_work_experience']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-6">
           <label for="countryOfWorkExperience"
@@ -122,6 +146,11 @@
             :options="countryOfWorkExperienceOptions"
           >
           </multiselect>
+          <template
+            v-for="(msg, fe) in formErrors['countries_or_work_experience']"
+          >
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-12">
           <label for="handsOnTechnology">HANDS ON TECHNOLOGY</label>
@@ -143,6 +172,9 @@
               ></template
             >
           </multiselect>
+          <template v-for="(msg, fe) in formErrors['hands_on_technology']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="hands-on-technology col-sm-12">
           <ul class="technology-list list-inline">
@@ -170,10 +202,13 @@
           <multiselect
             id="utmMedium"
             name="utmMedium"
-            v-model="personalInformation.platform_from"
+            v-model="personalInformation.utm_medium"
             :options="utmMediumOptions"
           >
           </multiselect>
+          <template v-for="(msg, fe) in formErrors['utm_medium']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <div class="form-group col-sm-12">
           <label for="referee">NAME OF THE PROFESSIONAL</label>
@@ -185,6 +220,9 @@
             name="referee"
             v-model="personalInformation.name_of_professional"
           />
+          <template v-for="(msg, fe) in formErrors['name_of_professional']">
+            <span class="red-font" :key="fe"> {{ msg }} </span>
+          </template>
         </div>
         <template v-for="(language, i) in personalInformation.languages">
           <div class="form-group col-sm-12" :key="i + 'language'">
@@ -254,5 +292,5 @@
   </div>
   <!--PC-grid2 closing tag-->
 </template>
-<script lang="ts" src="./PersonalInformation.ts" ></script>
+<script lang="ts" src="./PersonalInformation.ts"></script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
