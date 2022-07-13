@@ -7,7 +7,7 @@ import axios, {
 import store from "@/store";
 
 const HTTP_CONFIG: AxiosRequestConfig = {
-  baseURL: process.env.BASE_URL || "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_APP_BASE_URL || "http://localhost:8000/api",
   headers: {
     Accept: "application/json",
   },

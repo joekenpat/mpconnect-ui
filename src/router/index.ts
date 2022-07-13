@@ -12,7 +12,7 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      redirect: "/sign-up",
+      redirect: "/auth/sign-in",
       meta: {
         auth_required: false,
       },
