@@ -7,19 +7,9 @@
       <section class="login-form-section">
         <div class="login-form-container">
           <ul class="log-sign">
-            <li>
-              <router-link to="/auth/sign-in" active-class="log-link-active"
-                >Login</router-link
-              >
-            </li>
-            <li>
-              <router-link to="/auth/sign-up" active-class="log-link-active"
-                >Sign up</router-link
-              >
-            </li>
+            <li class="log-link-active">Login</li>
           </ul>
-
-          <form class="login-form">
+          <form class="login-form" @submit.prevent="signIn">
             <div class="login-form-group">
               <label>Email</label>
               <input type="email" placeholder="Email" v-model="auth.email" />

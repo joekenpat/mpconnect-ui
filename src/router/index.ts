@@ -17,14 +17,14 @@ const router = new VueRouter({
         auth_required: false,
       },
     },
-    {
-      path: "/auth/sign-up",
-      name: "sign-up",
-      component: () => import("@/views/SignUp.vue"),
-      meta: {
-        auth_required: false,
-      },
-    },
+    // {
+    //   path: "/auth/sign-up",
+    //   name: "sign-up",
+    //   component: () => import("@/views/SignUp.vue"),
+    //   meta: {
+    //     auth_required: false,
+    //   },
+    // },
     {
       path: "/auth/sign-in",
       name: "sign-in",

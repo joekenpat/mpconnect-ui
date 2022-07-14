@@ -93,15 +93,14 @@
               <img v-if="user" class="avatar-image" :src="user?.img_url" />
               {{ user?.first_name }} <span class="fa fa-caret-down"></span>
             </a>
-            <ul
-              v-if="dropDownMenuLinks.length > 0"
-              class="dropdown-menu nav-dropdown-content"
-            >
-              <li v-for="(dropDownMenuLink, i) in dropDownMenuLinks" :key="i">
-                <a :href="dropDownMenuLink.route"
-                  >{{ dropDownMenuLink.text }}
-                </a>
-              </li>
+            <ul class="dropdown-menu nav-dropdown-content">
+              <li><a href="#">About Us</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">FAQ's</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Help & Support</a></li>
+              <li role="separator" class="divider"></li>
+              <li><router-link to="/auth/sign-out">Logout</router-link></li>
             </ul>
           </li>
         </ul>
@@ -126,7 +125,7 @@ export default {
           text: "home",
         },
       ],
-      user: null
+      user: null,
     };
   },
 };
