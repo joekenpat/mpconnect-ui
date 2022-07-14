@@ -296,10 +296,6 @@
             </h5>
             <p>09:00 AM to 01:00 PM (4 hours)</p>
           </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">PER DIEM RATES</h5>
-            <p>Min: $1000 - Max: $2500</p>
-          </div>
         </div>
         <div class="bio-section">
           <div class="profile-section side-margin-10">
@@ -319,7 +315,7 @@
             <div class="profile-section side-margin-10">
               <h4 class="bold-font">{{ aacValue.title }}</h4>
               <div>
-               
+
                 <button type="button" class="btn delete-btn">
                   <em class="fa fa-trash"></em>
                 </button>
@@ -418,12 +414,12 @@
             </div>
           </div>
         </div>
-        <button
-          type="button"
+        <a
+          href="http://portal.mp-connect.me/dashboard"
           class="btn btn-block red-background white-font font-600"
         >
-          SUBMIT PROFILE
-        </button>
+          GOTO DASHBOARD
+        </a>
       </div>
       <!--PC-grid2 closing tag-->
 
