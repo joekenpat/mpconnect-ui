@@ -16,9 +16,8 @@ export default Vue.extend({
         "WordPress",
       ],
       genderOptions: ["male", "female"],
-      countryOptions: ["nigeria", "uae"],
+      countryOptions: ["nigeria", "uae", "usa","mexico"],
       yearsOfWorkExperienceOptions: ["2", "3", "4", "5"],
-      countryOfWorkExperienceOptions: ["2", "3", "4", "5"],
       languageOptions: ["English", "Vernacular"],
       utmMediumOptions: [
         "Reference",

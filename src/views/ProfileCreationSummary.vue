@@ -59,8 +59,8 @@
               <p>{{ personalInformation.mobile_phone }}</p>
             </div>
             <div class="col-sm-6">
-              <h4>Fixed Line</h4>
-              <p>{{ personalInformation.fixed_phone }}</p>
+              <h4>Current Job Title</h4>
+              <p>{{ personalInformation.current_job_title }}</p>
             </div>
           </div>
           <div
@@ -71,22 +71,18 @@
               <p>{{ personalInformation.years_of_work_experience }} Years</p>
             </div>
             <div class="col-sm-6">
-              <h4>Total Countries of Work Experience</h4>
-              <p>{{ personalInformation.countries_of_work_experience }}</p>
-            </div>
-          </div>
-          <div class="hands-on-technology row side-margin-10 vertical-pad-10">
-            <p class="lightgray-font vertical-pad-10">Hands on Technology</p>
-            <ul class="technology-list list-inline">
+              <h4>Countries of Work Experience</h4>
+              <p><ul class="technology-list list-inline">
               <li
                 v-for="(
-                  hotValue, hot
-                ) in personalInformation.hands_on_technology"
-                :key="hot"
+                  hotValue, cwe
+                ) in personalInformation.countries_of_work_experience"
+                :key="cwe"
               >
                 {{ hotValue }}
               </li>
-            </ul>
+            </ul></p>
+            </div>
           </div>
         </div>
         <div class="bio-section">
@@ -137,10 +133,10 @@
               </ul>
             </div>
             <p class="lightgray-font pad-10">
-              {{ uwe.start_month }} {{ uwe.start_year }} -
+              {{ numberToMonth(parseInt(uwe.start_month||"0")) }} {{ uwe.start_year }} -
               <template v-if="uwe.is_current_role">Current</template>
               <template v-else>
-                {{ uwe.end_month }} {{ uwe.end_year }} -
+                {{ numberToMonth(parseInt(uwe.end_month||"0")) }} {{ uwe.end_year }} -
                 {{
                   parseInt(uwe.end_year || "0") -
                   parseInt(uwe.start_year || "0")
@@ -151,12 +147,20 @@
             <p class="lightgray-font pad-10">{{ uwe.description }}.</p>
           </div>
           <div class="side-margin-10">
+
+             <router-link
+              to="/profile-creation/work-history"
+              class="btn edit-profile"
+              v-slot="{href, _, navigate}"
+            >
             <button
-              type="button"
+              :href="href"
+              @click="navigate"
               class="btn btn-block white-background red-border red-font vertical-pad-10 bold-font"
             >
               <span class="fa fa-plus"></span> ADD NEW WORK HISTORY
             </button>
+              </router-link>
           </div>
         </div>
         <div class="bio-section">
@@ -177,9 +181,6 @@
             <div class="profile-section side-margin-10">
               <h4 class="bold-font">{{ prValue.name_of_client }}</h4>
               <div>
-                <button type="button" class="btn delete-btn">
-                  <em class="fa fa-pencil"></em>
-                </button>
                 <button type="button" class="btn delete-btn">
                   <em class="fa fa-trash"></em>
                 </button>
@@ -205,12 +206,19 @@
             </p>
           </div>
           <div class="side-margin-10">
+            <router-link
+              to="/profile-creation/project-reference"
+              class="btn edit-profile"
+              v-slot="{href, _, navigate}"
+            >
             <button
-              type="button"
+              :href="href"
+              @click="navigate"
               class="btn btn-block white-background red-border red-font vertical-pad-10 bold-font"
             >
               <span class="fa fa-plus"></span> ADD NEW PROJECT
             </button>
+              </router-link>
           </div>
         </div>
         <div class="bio-section">
@@ -311,9 +319,7 @@
             <div class="profile-section side-margin-10">
               <h4 class="bold-font">{{ aacValue.title }}</h4>
               <div>
-                <button type="button" class="btn delete-btn">
-                  <em class="fa fa-pencil"></em>
-                </button>
+               
                 <button type="button" class="btn delete-btn">
                   <em class="fa fa-trash"></em>
                 </button>

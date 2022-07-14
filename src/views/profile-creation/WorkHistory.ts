@@ -22,7 +22,7 @@ export default Vue.extend({
         "PHP Development",
         "WordPress",
       ],
-      formErrors: {} as IUserWorkExperienceErrorsDTO,
+      formErrors: {} as { [key: string]: string[] },
     };
   },
   created() {

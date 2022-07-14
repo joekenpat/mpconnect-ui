@@ -27,9 +27,9 @@ export interface IUserPersonalInfoDTO {
   nationality: null | string;
   current_address: null | string;
   mobile_phone: null | string;
-  fixed_phone: null | string;
+  current_job_title: null | string;
   years_of_work_experience: null | string;
-  countries_of_work_experience: null | string;
+  countries_of_work_experience: string[];
   hands_on_technology: string[];
   utm_medium: null | string;
   name_of_professional: null | string;
@@ -46,9 +46,9 @@ export class UserPersonalInfoDTO implements IUserPersonalInfoDTO {
   nationality: null | string;
   current_address: null | string;
   mobile_phone: null | string;
-  fixed_phone: null | string;
+  current_job_title: null | string;
   years_of_work_experience: null | string;
-  countries_of_work_experience: null | string;
+  countries_of_work_experience: string [];
   hands_on_technology: string[] = [];
   utm_medium: null | string;
   name_of_professional: null | string;
@@ -63,9 +63,9 @@ export class UserPersonalInfoDTO implements IUserPersonalInfoDTO {
     this.nationality = data.nationality;
     this.current_address = data.current_address;
     this.mobile_phone = data.mobile_phone;
-    this.fixed_phone = data.fixed_phone;
+    this.current_job_title = data.current_job_title;
     this.years_of_work_experience = data.years_of_work_experience;
-    this.countries_of_work_experience = data.countries_of_work_experience;
+    this.countries_of_work_experience = data.countries_of_work_experience ? data.countries_of_work_experience : [];
     this.hands_on_technology = data.hands_on_technology
       ? data.hands_on_technology
       : [];

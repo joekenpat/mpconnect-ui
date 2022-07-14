@@ -26,6 +26,7 @@ import {
   IUserCertificationDTO,
   UserCertificationDTO,
 } from "@/services/CertificationDTO";
+import { numberToMonthName } from "@/services/CalendarMonthUtil";
 
 export default Vue.extend({
   data() {
@@ -63,6 +64,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["setAuthUser"]),
+    numberToMonth(number: number) {
+      return numberToMonthName(number);
+    },
     fetchUserDetail(): void {
       $http
         .get("/profile")

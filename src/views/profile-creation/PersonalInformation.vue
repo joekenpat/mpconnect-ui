@@ -105,16 +105,16 @@
           </template>
         </div>
         <div class="form-group col-sm-6">
-          <label for="phone">FIXED LINE</label>
+          <label for="current_job_title">CURRENT JOB TITLE</label>
           <input
             type="tel"
             class="form-control"
-            id="phone2"
-            placeholder="Enter your fixed line number"
-            name="phone2"
-            v-model="personalInformation.fixed_phone"
+            id="current_job_title"
+            placeholder="Current Job title"
+            name="current_job_title"
+            v-model="personalInformation.current_job_title"
           />
-          <template v-for="(msg, fe) in formErrors['fixed_phone']">
+          <template v-for="(msg, fe) in formErrors['current_job_title']">
             <span class="red-font" :key="fe"> {{ msg }} </span>
           </template>
         </div>
@@ -141,59 +141,26 @@
           <multiselect
             id="countryOfWorkExperience"
             name="countryOfWorkExperience"
-            placeholder="Select number of countries"
+            :multiple="true"
+            :searchable="true"
+            :close-on-select="false"
+            placeholder="Select countries"
             v-model="personalInformation.countries_of_work_experience"
-            :options="countryOfWorkExperienceOptions"
+            :options="countryOptions"
           >
+            <template slot="selection" slot-scope="{ values, search, isOpen }"
+              ><span
+                class="multiselect__multiple"
+                v-if="values.length &amp;&amp; !isOpen"
+                >{{ values.length }} country selected</span
+              ></template
+            >
           </multiselect>
           <template
             v-for="(msg, fe) in formErrors['countries_or_work_experience']"
           >
             <span class="red-font" :key="fe"> {{ msg }} </span>
           </template>
-        </div>
-        <div class="form-group col-sm-12">
-          <label for="handsOnTechnology">HANDS ON TECHNOLOGY</label>
-          <multiselect
-            id="handsOnTechnology"
-            name="handsOnTechnology"
-            :multiple="true"
-            :searchable="true"
-            :close-on-select="false"
-            placeholder="Select hands on technology"
-            v-model="personalInformation.hands_on_technology"
-            :options="handsOnTechnologyOptions"
-          >
-            <template slot="selection" slot-scope="{ values, search, isOpen }"
-              ><span
-                class="multiselect__multiple"
-                v-if="values.length &amp;&amp; !isOpen"
-                >{{ values.length }} options selected</span
-              ></template
-            >
-          </multiselect>
-          <template v-for="(msg, fe) in formErrors['hands_on_technology']">
-            <span class="red-font" :key="fe"> {{ msg }} </span>
-          </template>
-        </div>
-        <div class="hands-on-technology col-sm-12">
-          <ul class="technology-list list-inline">
-            <li
-              v-for="(
-                handsOnTechnologyValue, i
-              ) in personalInformation.hands_on_technology"
-              :key="i"
-            >
-              {{ handsOnTechnologyValue }}
-              <button
-                type="button"
-                class="button x-btn"
-                @click="removeHandsOnTechnologyValue(i)"
-              >
-                <span class="fa fa-times-circle"></span>
-              </button>
-            </li>
-          </ul>
         </div>
         <div class="form-group col-sm-12">
           <label for="utmMedium"

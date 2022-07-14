@@ -19,6 +19,13 @@
                 :name="`employerName_${we}`"
                 v-model="workExperiences[we].employer_name"
               />
+              <template
+                v-for="(msg, fe) in formErrors[
+                  `work_experiences.${we}.employer_name`
+                ]"
+              >
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="form-group col-sm-6">
               <label :for="`jobTitle_${we}`">JOB TITLE</label>
@@ -177,9 +184,12 @@
         <p class="lightgray-font">
           Save the above information to continue to next step.
         </p>
-        <button @click="updateWorkExperiences" class="btn btn-lg red-background">
-        SAVE & CONTINUE
-      </button>
+        <button
+          @click="updateWorkExperiences"
+          class="btn btn-lg red-background"
+        >
+          SAVE & CONTINUE
+        </button>
       </div>
     </div>
   </div>
