@@ -107,6 +107,64 @@ const router = new VueRouter({
         auth_required: true,
       },
     },
+    {
+      path: "/expert-profile/:expertProfileId",
+      name: "expert-profile",
+      props: ({ params }) => ({
+        expertProfileId: parseInt(params.expertProfileId) || 0,
+      }),
+      component: () => import("@/views/expert-profile/index.vue"),
+      redirect: (to) => {
+        console.log({ to });
+        return `/expert-profile/${
+          to.params.expertProfileId || "0"
+        }/personal-information`;
+      },
+      meta: {
+        auth_required: true,
+      },
+      children: [
+        {
+          path: "personal-information",
+          name: "expert-profile-personal-information",
+          props: ({ params }) => ({
+            expertProfileId: parseInt(params.expertProfileId) || 0,
+          }),
+          component: () =>
+            import("@/views/expert-profile/PersonalInformation.vue"),
+        },
+        {
+          path: "industry-and-functional-expertise",
+          name: "expert-profile-industry-and-functional-expertise",
+          props: ({ params }) => ({
+            expertProfileId: parseInt(params.expertProfileId) || 0,
+          }),
+          component: () =>
+            import("@/views/expert-profile/IndustryAndFunctionalExpertise.vue"),
+        },
+        // {
+        //   path: "project-reference",
+        //   name: "expert-profile-project-reference",
+        //   props: true,
+        //   component: () =>
+        //     import("@/views/expert-profile/ProjectReference.vue"),
+        // },
+        // {
+        //   path: "awards-and-certification",
+        //   name: "expert-profile-awards-and-certification",
+        //   props: true,
+        //   component: () =>
+        //     import("@/views/expert-profile/AwardsAndCertification.vue"),
+        // },
+        {
+          path: "*",
+          redirect: (to) =>
+            `/expert-profile/${
+              to.params.expertProfileId || "0"
+            }/personal-information`,
+        },
+      ],
+    },
   ],
 });
 

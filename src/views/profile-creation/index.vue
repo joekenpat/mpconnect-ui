@@ -1,5 +1,5 @@
 <script lang="ts">
-import ProfileCreationSideBar from "@/components/profile-creation/SideBar.vue";
+import ProfileCreationSideBar from "@/components/ProfileCreationSideBar.vue";
 
 export default {
   data() {
@@ -18,7 +18,7 @@ export default {
     <h2 class="white-font">Thank you for your interest in MP Connect!</h2>
     <p class="white-font">
       To begin your application to join, tell us about yourself and complete a
-      profile for review
+      profile for review.
     </p>
     <main class="PC-main">
       <ProfileCreationSideBar />

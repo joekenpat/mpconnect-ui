@@ -4,6 +4,8 @@ import avatar from "@/assets/avatar.png";
 import { $http } from "@/services/http-common";
 import { UserPersonalInfoDTO } from "@/services/UserDTO";
 import { jsonToFormData } from "@/services/JsonToFormData";
+import { countries } from "@/services/Countries";
+import { languages } from "@/services/Languages";
 export default Vue.extend({
   data() {
     return {
@@ -16,9 +18,9 @@ export default Vue.extend({
         "WordPress",
       ],
       genderOptions: ["male", "female"],
-      countryOptions: ["nigeria", "uae", "usa","mexico"],
+      countryOptions: countries,
       yearsOfWorkExperienceOptions: ["2", "3", "4", "5"],
-      languageOptions: ["English", "Vernacular"],
+      languageOptions: languages,
       utmMediumOptions: [
         "Reference",
         "LinkedIn",
@@ -54,6 +56,7 @@ export default Vue.extend({
     removeHandsOnTechnologyValue(index: number): void {
       this.personalInformation.hands_on_technology.splice(index, 1);
     },
+
     addUserPersonalInformationLanguage(): void {
       this.personalInformation.languages.push({
         name: "",

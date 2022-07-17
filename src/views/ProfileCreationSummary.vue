@@ -72,16 +72,16 @@
             </div>
             <div class="col-sm-6">
               <h4>Countries of Work Experience</h4>
-              <p><ul class="technology-list list-inline">
-              <li
-                v-for="(
-                  hotValue, cwe
-                ) in personalInformation.countries_of_work_experience"
-                :key="cwe"
-              >
-                {{ hotValue }}
-              </li>
-            </ul></p>
+              <ul class="technology-list list-inline">
+                <li
+                  v-for="(
+                    hotValue, cwe
+                  ) in personalInformation.countries_of_work_experience"
+                  :key="cwe"
+                >
+                  {{ hotValue }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -133,10 +133,12 @@
               </ul>
             </div>
             <p class="lightgray-font pad-10">
-              {{ numberToMonth(parseInt(uwe.start_month||"0")) }} {{ uwe.start_year }} -
+              {{ numberToMonth(parseInt(uwe.start_month || "0")) }}
+              {{ uwe.start_year }} -
               <template v-if="uwe.is_current_role">Current</template>
               <template v-else>
-                {{ numberToMonth(parseInt(uwe.end_month||"0")) }} {{ uwe.end_year }} -
+                {{ numberToMonth(parseInt(uwe.end_month || "0")) }}
+                {{ uwe.end_year }} -
                 {{
                   parseInt(uwe.end_year || "0") -
                   parseInt(uwe.start_year || "0")
@@ -145,22 +147,6 @@
               </template>
             </p>
             <p class="lightgray-font pad-10">{{ uwe.description }}.</p>
-          </div>
-          <div class="side-margin-10">
-
-             <router-link
-              to="/profile-creation/work-history"
-              class="btn edit-profile"
-              v-slot="{href, _, navigate}"
-            >
-            <button
-              :href="href"
-              @click="navigate"
-              class="btn btn-block white-background red-border red-font vertical-pad-10 bold-font"
-            >
-              <span class="fa fa-plus"></span> ADD NEW WORK HISTORY
-            </button>
-              </router-link>
           </div>
         </div>
         <div class="bio-section">
@@ -204,21 +190,6 @@
             <p class="lightgray-font pad-10">
               {{ prValue.description }}
             </p>
-          </div>
-          <div class="side-margin-10">
-            <router-link
-              to="/profile-creation/project-reference"
-              class="btn edit-profile"
-              v-slot="{href, _, navigate}"
-            >
-            <button
-              :href="href"
-              @click="navigate"
-              class="btn btn-block white-background red-border red-font vertical-pad-10 bold-font"
-            >
-              <span class="fa fa-plus"></span> ADD NEW PROJECT
-            </button>
-              </router-link>
           </div>
         </div>
         <div class="bio-section">
@@ -315,7 +286,6 @@
             <div class="profile-section side-margin-10">
               <h4 class="bold-font">{{ aacValue.title }}</h4>
               <div>
-
                 <button type="button" class="btn delete-btn">
                   <em class="fa fa-trash"></em>
                 </button>
@@ -328,14 +298,6 @@
               ><span class="fa fa-file-pdf-o red-font pad-10"></span
               >Project_case_Study_doc.pdf</a
             >
-          </div>
-          <div class="side-margin-10">
-            <button
-              type="button"
-              class="btn btn-block white-background red-border red-font vertical-pad-10 bold-font"
-            >
-              <span class="fa fa-plus"></span> ADD NEW AWARDS/CERTIFICATION
-            </button>
           </div>
         </div>
         <div class="bio-section">
@@ -369,24 +331,16 @@
             <h5 class="lightgray-font font-600">
               WHERE WOULD YOU LIKE TO CONTRIBUTE
             </h5>
-            <p>Working on Projects</p>
-
-            <p class="lightgray-font">
-              There are over 2 million apps on the App Store and growing. The
-              only ones that do well are the ones that are well designed both in
-              terms of user interface and user experience. That's why it is so
-              important to learn the design skills that will make your app stand
-              out in a crowd.
-            </p>
-            <p>Building Communties</p>
-
-            <p class="lightgray-font">
-              There are over 2 million apps on the App Store and growing. The
-              only ones that do well are the ones that are well designed both in
-              terms of user interface and user experience. That's why it is so
-              important to learn the design skills that will make your app stand
-              out in a crowd.
-            </p>
+            <div
+              v-for="(iaoc, aoc) in interest.areas_of_contribution"
+              :key="aoc"
+            >
+              <p v-if="iaoc === 'working-on-projects'">Working on Projects</p>
+              <p v-else-if="iaoc === 'develop-proposals'">Develop Proposals</p>
+              <p v-else-if="iaoc === 'develop-clients'">Develop Clients</p>
+              <p v-else-if="iaoc === 'extend-network'">Extend Network</p>
+              <p v-else-if="iaoc === 'build-communities'">Build Communities</p>
+            </div>
           </div>
         </div>
       </div>
