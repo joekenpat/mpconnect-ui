@@ -127,7 +127,7 @@ export default Vue.extend({
           });
           this.$router.push({
             name: "expert-profile-project-reference",
-            params: { expertProfileId: data.profile.id },
+            params: { expertProfileId: this.expertProfileId.toString() },
           });
         })
         .catch((error) => {

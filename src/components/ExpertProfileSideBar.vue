@@ -10,7 +10,7 @@
               : menuLink.route
           "
           :key="i"
-          :class="[currentRoutePath === menuLink.route && 'active']"
+          :class="{'active': currentRoutePath === menuLink.route}"
         >
           {{ menuLink.text }}</router-link
         >

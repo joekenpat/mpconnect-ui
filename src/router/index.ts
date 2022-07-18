@@ -142,20 +142,24 @@ const router = new VueRouter({
           component: () =>
             import("@/views/expert-profile/IndustryAndFunctionalExpertise.vue"),
         },
-        // {
-        //   path: "project-reference",
-        //   name: "expert-profile-project-reference",
-        //   props: true,
-        //   component: () =>
-        //     import("@/views/expert-profile/ProjectReference.vue"),
-        // },
-        // {
-        //   path: "awards-and-certification",
-        //   name: "expert-profile-awards-and-certification",
-        //   props: true,
-        //   component: () =>
-        //     import("@/views/expert-profile/AwardsAndCertification.vue"),
-        // },
+        {
+          path: "project-reference",
+          name: "expert-profile-project-reference",
+          props: ({ params }) => ({
+            expertProfileId: parseInt(params.expertProfileId) || 0,
+          }),
+          component: () =>
+            import("@/views/expert-profile/ProjectReference.vue"),
+        },
+        {
+          path: "awards-and-certification",
+          name: "expert-profile-awards-and-certification",
+          props: ({ params }) => ({
+            expertProfileId: parseInt(params.expertProfileId) || 0,
+          }),
+          component: () =>
+            import("@/views/expert-profile/AwardsAndCertification.vue"),
+        },
         {
           path: "*",
           redirect: (to) =>
