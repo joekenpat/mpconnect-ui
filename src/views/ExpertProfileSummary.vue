@@ -1,5 +1,5 @@
 <template>
-  <div class="PS-container">
+  <div class="PS-container" :key="expertProfileId">
     <h2 class="white-font text-center temp-text">
       <em class="fa fa-camera"></em> Add a Background Photo
     </h2>
@@ -26,17 +26,10 @@
           </div>
           <div class="row pad-20">
             <router-link
-              to="/profile-creation-summary"
-              active-class="active"
-              class="btn add-expert-profile font-600 side-margin-5"
-            >
-              General Profile
-            </router-link>
-            <router-link
               v-for="(profile, p) in expertProfiles"
               :key="p"
               :to="{
-                name: 'expert-profile-personal-information',
+                name: 'expert-profile-summary',
                 params: {
                   expertProfileId: profile.id,
                 },
@@ -119,75 +112,38 @@
             </div>
           </div>
         </div>
-        <div class="bio-section">
+        <div class="bio-section" v-if="expertProfileId && currentExpertProfile">
           <div class="profile-section side-margin-10">
-            <h3>Short Bio (CV Summary)</h3>
+            <h3>Description</h3>
             <router-link
-              to="/profile-creation/short-bio"
+              :to="{
+                name: 'expert-profile-personal-information',
+                params: {
+                  expertProfileId: expertProfileId,
+                },
+              }"
               class="btn edit-profile"
             >
               <em class="fa fa-pencil pad-10"></em>Edit
             </router-link>
           </div>
           <p class="lightgray-font pad-10">
-            {{ userBio.short_bio }}
+            {{ currentExpertProfile.description }}
           </p>
         </div>
-        <div class="bio-section">
-          <div class="profile-section side-margin-10">
-            <h3>Work History</h3>
-            <router-link
-              to="/profile-creation/work-history"
-              class="btn edit-profile"
-            >
-              <em class="fa fa-pencil pad-10"></em>Edit
-            </router-link>
-          </div>
-          <div
-            class="PS-cards pad-10"
-            v-for="(uwe, we) in workExperiences"
-            :key="we"
-          >
-            <div class="profile-section side-margin-10">
-              <h4 class="bold-font">{{ uwe.job_title }}r</h4>
-              <button type="button" class="btn delete-btn">
-                <em class="fa fa-trash"></em>
-              </button>
-            </div>
-            <h4 class="side-margin-10">{{ uwe.employer_name }}</h4>
-            <h4 class="side-margin-10">{{ uwe.industry }}</h4>
-            <div class="hands-on-technology side-margin-10">
-              <ul class="technology-list list-inline">
-                <li
-                  v-for="(hotValue, hot) in uwe.hands_on_technology"
-                  :key="we + hot"
-                >
-                  {{ hotValue }}
-                </li>
-              </ul>
-            </div>
-            <p class="lightgray-font pad-10">
-              {{ numberToMonth(parseInt(uwe.start_month || "0")) }}
-              {{ uwe.start_year }} -
-              <template v-if="uwe.is_current_role">Current</template>
-              <template v-else>
-                {{ numberToMonth(parseInt(uwe.end_month || "0")) }}
-                {{ uwe.end_year }} -
-                {{
-                  parseInt(uwe.end_year || "0") -
-                  parseInt(uwe.start_year || "0")
-                }}
-                Yr
-              </template>
-            </p>
-            <p class="lightgray-font pad-10">{{ uwe.description }}.</p>
-          </div>
-        </div>
-        <div class="bio-section">
+        <div
+          class="bio-section"
+          v-if="expertProfileId && expertProjectReference.length > 0"
+        >
           <div class="profile-section side-margin-10">
             <h3>Project References</h3>
             <router-link
-              to="/profile-creation/project-reference"
+              :to="{
+                name: 'expert-profile-project-reference',
+                params: {
+                  expertProfileId: expertProfileId,
+                },
+              }"
               class="btn edit-profile"
             >
               <em class="fa fa-pencil pad-10"></em>Edit
@@ -195,7 +151,7 @@
           </div>
           <div
             class="PS-cards pad-10"
-            v-for="(prValue, pr) in projectReferences"
+            v-for="(prValue, pr) in expertProjectReference"
             :key="pr"
           >
             <div class="profile-section side-margin-10">
@@ -226,11 +182,19 @@
             </p>
           </div>
         </div>
-        <div class="bio-section">
+        <div
+          class="bio-section"
+          v-if="expertProfileId && industry_experiences.length > 0"
+        >
           <div class="profile-section side-margin-10">
             <h3>Industry Experience</h3>
             <router-link
-              to="/profile-creation/industry-and-functional-expertise"
+              :to="{
+                name: 'expert-profile-industry-and-functional-expertise',
+                params: {
+                  expertProfileId: expertProfileId,
+                },
+              }"
               class="btn edit-profile"
             >
               <em class="fa fa-pencil pad-10"></em>Edit
@@ -244,11 +208,19 @@
             </ul>
           </div>
         </div>
-        <div class="bio-section">
+        <div
+          class="bio-section"
+          v-if="expertProfileId && functional_skills.length > 0"
+        >
           <div class="profile-section side-margin-10">
             <h3>Functional Skills</h3>
             <router-link
-              to="/profile-creation/industry-and-functional-expertise"
+              :to="{
+                name: 'expert-profile-industry-and-functional-expertise',
+                params: {
+                  expertProfileId: expertProfileId,
+                },
+              }"
               class="btn edit-profile"
             >
               <em class="fa fa-pencil pad-10"></em>Edit
@@ -262,51 +234,19 @@
             </ul>
           </div>
         </div>
-        <div class="bio-section">
-          <div class="profile-section side-margin-10">
-            <h3>Work Status</h3>
-            <button type="button" class="btn edit-profile">
-              <em class="fa fa-pencil pad-10"></em>Edit
-            </button>
-          </div>
-          <div
-            class="pink-bg side-margin-10 pad-5 vertical-margin-10 border-radius-5"
-          >
-            <h4 class="red-font side-margin-10">Current Work Status</h4>
-          </div>
-          <div class="side-margin-10 lightgray-bottom-border vertical-pad-10">
-            <h3>
-              <span class="fa fa-check-circle red-font"></span> Not Available
-            </h3>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">
-              LOCATIONS INTERESTED TO WORK IN
-            </h5>
-            <ul class="PS-card-list">
-              <li>United States of America (USA)</li>
-              <li>Czech Republic</li>
-            </ul>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">WORK TYPE</h5>
-            <ul class="PS-card-list">
-              <li>Onsite</li>
-              <li>Remote</li>
-            </ul>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">
-              LOCATIONS INTERESTED TO WORK IN
-            </h5>
-            <p>09:00 AM to 01:00 PM (4 hours)</p>
-          </div>
-        </div>
-        <div class="bio-section">
+        <div
+          class="bio-section"
+          v-if="expertProfileId && awardsAndCertifications.length > 0"
+        >
           <div class="profile-section side-margin-10">
             <h3>Awards / Certifications</h3>
             <router-link
-              to="/profile-creation/awards-and-certification"
+              :to="{
+                name: 'expert-profile-awards-and-certification',
+                params: {
+                  expertProfileId: expertProfileId,
+                },
+              }"
               class="btn edit-profile"
             >
               <em class="fa fa-pencil pad-10"></em>Edit
@@ -334,49 +274,6 @@
             >
           </div>
         </div>
-        <div class="bio-section">
-          <div class="profile-section side-margin-10">
-            <h3>Area of Interest</h3>
-            <router-link
-              to="/profile-creation/interest-and-contribution"
-              class="btn edit-profile"
-            >
-              <em class="fa fa-pencil pad-10"></em>Edit
-            </router-link>
-          </div>
-          <div class="hands-on-technology margin-10">
-            <ul class="technology-list list-inline">
-              <li v-for="(itoi, toi) in interest.topic_of_interests" :key="toi">
-                {{ itoi }}
-              </li>
-            </ul>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">
-              WHERE DID YOU HEAR ABOUT THIS PLATFORM FROM
-            </h5>
-            <p>{{ personalInformation.utm_medium }}</p>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">NAME OF THE PROFESSIONAL</h5>
-            <p>{{ personalInformation.name_of_professional }}</p>
-          </div>
-          <div class="margin-10">
-            <h5 class="lightgray-font font-600">
-              WHERE WOULD YOU LIKE TO CONTRIBUTE
-            </h5>
-            <div
-              v-for="(iaoc, aoc) in interest.areas_of_contribution"
-              :key="aoc"
-            >
-              <p v-if="iaoc === 'working-on-projects'">Working on Projects</p>
-              <p v-else-if="iaoc === 'develop-proposals'">Develop Proposals</p>
-              <p v-else-if="iaoc === 'develop-clients'">Develop Clients</p>
-              <p v-else-if="iaoc === 'extend-network'">Extend Network</p>
-              <p v-else-if="iaoc === 'build-communities'">Build Communities</p>
-            </div>
-          </div>
-        </div>
       </div>
       <!-- PC-grid1 closing tag-->
 
@@ -394,14 +291,24 @@
             <div>
               <h2>20%</h2>
               <p>Profile setup pending</p>
-              <a
-                href="#"
+              <router-link
+                v-if="expertProfileId"
+                :to="{
+                  name: 'expert-profile-personal-information',
+                  params: { expertProfileId: expertProfileId },
+                }"
                 class="red-font setup-profile-link bold-font vertical-margin-10"
-                >SETUP PROFILE</a
+                >SETUP THIS EXPERT PROFILE</router-link
               >
             </div>
           </div>
         </div>
+        <router-link
+          to="/profile-creation-summary"
+          class="btn btn-block red-background white-font font-600"
+        >
+          GOTO PROFILE
+        </router-link>
         <a
           href="http://portal.mp-connect.me/dashboard"
           class="btn btn-block red-background white-font font-600"
@@ -417,4 +324,4 @@
   </div>
   <!--Main body container closing tag-->
 </template>
-<script lang="ts" src="./ProfileCreationSummary.ts"></script>
+<script lang="ts" src="./ExpertProfileSummary.ts"></script>

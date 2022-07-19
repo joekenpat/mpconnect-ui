@@ -49,49 +49,6 @@
                 v-model="workExperiences[we].industry"
               />
             </div>
-            <div class="form-group col-sm-12">
-              <label :for="`handsOnTechnology_${we}`"
-                >HANDS ON TECHNOLOGY</label
-              >
-              <multiselect
-                :id="`handsOnTechnology_${we}`"
-                :name="`handsOnTechnology_${we}`"
-                :multiple="true"
-                :searchable="true"
-                :close-on-select="false"
-                placeholder="Select hands on technology"
-                v-model="workExperiences[we].hands_on_technology"
-                :options="handsOnTechnologyOptions"
-              >
-                <template
-                  slot="selection"
-                  slot-scope="{ values, search, isOpen }"
-                  ><span
-                    class="multiselect__multiple"
-                    v-if="values.length && !isOpen"
-                    >{{ values.length }} options selected</span
-                  ></template
-                >
-              </multiselect>
-            </div>
-            <div class="hands-on-technology col-sm-12">
-              <ul class="technology-list list-inline">
-                <li
-                  v-for="(handsOnTechnologyValue, i) in workExperiences[we]
-                    .hands_on_technology"
-                  :key="i"
-                >
-                  {{ handsOnTechnologyValue }}
-                  <button
-                    type="button"
-                    class="button x-btn"
-                    @click="removeHandsOnTechnologyValue(we, i)"
-                  >
-                    <span class="fa fa-times-circle"></span>
-                  </button>
-                </li>
-              </ul>
-            </div>
             <div class="form-group col-sm-6">
               <label :for="`startDate_${we}`">START MONTH</label>
               <multiselect

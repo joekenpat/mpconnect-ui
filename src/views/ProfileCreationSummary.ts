@@ -62,7 +62,6 @@ export default Vue.extend({
   },
   created() {
     this.fetchUserDetail();
-    this.fetchExpertProfiles();
     this.fetchUserIndustryOrSkills();
     this.fetchUserProjectReferences();
     this.fetchUserWorkExperiences();
@@ -85,23 +84,6 @@ export default Vue.extend({
             this.personalInformation.first_name,
             this.personalInformation.last_name,
           ].join(" ");
-        })
-        .catch((error) => {
-          console.error({ error });
-          this.$toast.open({
-            type: "error",
-            message: error.response.data.message,
-            duration: 5000,
-          });
-        });
-    },
-    fetchExpertProfiles(): void {
-      $http
-        .get("/expert-profile")
-        .then(({ data }) => {
-          this.expertProfiles = data.profiles.map(
-            (profile: IExpertProfileDTO) => new ExpertProfileDTO(profile)
-          );
         })
         .catch((error) => {
           console.error({ error });

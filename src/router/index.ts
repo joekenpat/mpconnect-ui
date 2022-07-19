@@ -166,6 +166,15 @@ const router = new VueRouter({
         },
       ],
     },
+    {
+      path: "/expert-profile-summary/:expertProfileId?",
+      name: "expert-profile-summary",
+      props: ({ params }) =>  ({expertProfileId: parseInt(params.expertProfileId) || undefined}),
+      component: () => import("@/views/ExpertProfileSummary.vue"),
+      meta: {
+        auth_required: true,
+      },
+    },
   ],
 });
 

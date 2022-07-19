@@ -10,7 +10,7 @@ export default {
 <template>
   <div id="app">
     <TopNavBar />
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 

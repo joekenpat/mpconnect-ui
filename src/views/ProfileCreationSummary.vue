@@ -24,36 +24,6 @@
               </button>
             </div>
           </div>
-          <div class="row pad-20">
-            <router-link
-              to="/profile-creation-summary"
-              active-class="active"
-              class="btn add-expert-profile font-600 side-margin-5"
-            >
-              General Profile
-            </router-link>
-            <router-link
-              v-for="(profile, p) in expertProfiles"
-              :key="p"
-              :to="{
-                name: 'expert-profile-personal-information',
-                params: {
-                  expertProfileId: profile.id,
-                },
-              }"
-              active-class="active"
-              class="btn add-expert-profile font-600 side-margin-5"
-            >
-              {{ profile.name }}
-            </router-link>
-            <router-link
-              to="/expert-profile/0/personal-information"
-              active-class="active"
-              class="btn add-expert-profile red-dotted red-font font-600"
-            >
-              + Create New
-            </router-link>
-          </div>
         </div>
         <div class="white-background pad-20 border-radius-5">
           <div class="profile-section side-margin-10">
@@ -394,14 +364,20 @@
             <div>
               <h2>20%</h2>
               <p>Profile setup pending</p>
-              <a
-                href="#"
+              <router-link
+                to="/profile-creation/personal-information"
                 class="red-font setup-profile-link bold-font vertical-margin-10"
-                >SETUP PROFILE</a
+                >SETUP PROFILE</router-link
               >
             </div>
           </div>
         </div>
+        <router-link
+          to="/expert-profile-summary"
+          class="btn btn-block red-background white-font font-600"
+        >
+          GOTO EXPERT PROFILE
+        </router-link>
         <a
           href="http://portal.mp-connect.me/dashboard"
           class="btn btn-block red-background white-font font-600"

@@ -19,6 +19,8 @@ import {
   UserProjectReferenceDTO,
 } from "@/services/ProjectReferenceDTO";
 import {
+  ExpertIndustryOrSkillDTO,
+  IExpertIndustryOrSkillDTO,
   IUserIndustryOrSkillDTO,
   UserIndustryOrSkillDTO,
 } from "@/services/IndustryExperienceDTO";
@@ -33,6 +35,13 @@ import {
 } from "@/services/ExpertProfileDTO";
 
 export default Vue.extend({
+  props: {
+    expertProfileId: {
+      type: Number,
+      required: false,
+      default: undefined,
+    },
+  },
   data() {
     return {
       avatar,
@@ -53,7 +62,7 @@ export default Vue.extend({
         areas_of_contribution: [],
       } as UserInterestDTO,
       workExperiences: [] as UserWorkExperienceDTO[],
-      projectReferences: [] as UserProjectReferenceDTO[],
+      expertProjectReference: [] as UserProjectReferenceDTO[],
       industry_experiences: [] as UserIndustryOrSkillDTO[],
       functional_skills: [] as UserIndustryOrSkillDTO[],
       awardsAndCertifications: [] as UserCertificationDTO[],
@@ -63,10 +72,18 @@ export default Vue.extend({
   created() {
     this.fetchUserDetail();
     this.fetchExpertProfiles();
-    this.fetchUserIndustryOrSkills();
-    this.fetchUserProjectReferences();
-    this.fetchUserWorkExperiences();
-    this.fetchUserCertifications();
+    if (this.expertProfileId) {
+      this.fetchExpertProjectReferences();
+      this.fetchExpertIndustryOrSkills();
+      this.fetchExpertCertifications();
+    }
+  },
+  computed: {
+    currentExpertProfile(): ExpertProfileDTO | undefined {
+      return this.expertProfiles.find((expertProfile) => {
+        return expertProfile.id === this.expertProfileId;
+      });
+    },
   },
   methods: {
     ...mapActions(["setAuthUser"]),
@@ -112,26 +129,26 @@ export default Vue.extend({
           });
         });
     },
-    fetchUserIndustryOrSkills(): void {
+    fetchExpertIndustryOrSkills(): void {
       $http
-        .get("/profile/skill")
+        .get("/expert-profile/" + this.expertProfileId + "/skill")
         .then(({ data }) => {
-          console.log(data.skills as UserIndustryOrSkillDTO[]);
           this.functional_skills = data.skills
             .map(
-              (skill: IUserIndustryOrSkillDTO) =>
-                new UserIndustryOrSkillDTO(skill)
+              (skill: IExpertIndustryOrSkillDTO) =>
+                new ExpertIndustryOrSkillDTO(skill)
             )
             .filter(
-              (skill: IUserIndustryOrSkillDTO) =>
+              (skill: IExpertIndustryOrSkillDTO) =>
                 skill.type === "functional_skill"
             );
           this.industry_experiences = data.skills
             .map(
-              (exp: IUserIndustryOrSkillDTO) => new UserIndustryOrSkillDTO(exp)
+              (exp: IExpertIndustryOrSkillDTO) =>
+                new ExpertIndustryOrSkillDTO(exp)
             )
             .filter(
-              (skill: IUserIndustryOrSkillDTO) =>
+              (skill: IExpertIndustryOrSkillDTO) =>
                 skill.type === "industry_experience"
             );
         })
@@ -144,31 +161,11 @@ export default Vue.extend({
           });
         });
     },
-    fetchUserWorkExperiences(): void {
+    fetchExpertProjectReferences(): void {
       $http
-        .get("/profile/work-experience")
+        .get("/expert-profile/" + this.expertProfileId + "/project-reference")
         .then(({ data }) => {
-          console.log(data.work_experiences as UserWorkExperienceDTO[]);
-          this.workExperiences = data.work_experiences.map(
-            (experience: IUserWorkExperienceDTO) =>
-              new UserWorkExperienceDTO(experience)
-          );
-        })
-        .catch((error) => {
-          console.error({ error });
-          this.$toast.open({
-            type: "error",
-            message: error.response.data.message,
-            duration: 5000,
-          });
-        });
-    },
-    fetchUserProjectReferences(): void {
-      $http
-        .get("/profile/project-reference")
-        .then(({ data }) => {
-          console.log(data.project_references as UserProjectReferenceDTO[]);
-          this.projectReferences = data.project_references.map(
+          this.expertProjectReference = data.project_references.map(
             (experience: IUserProjectReferenceDTO) =>
               new UserProjectReferenceDTO(experience)
           );
@@ -182,11 +179,10 @@ export default Vue.extend({
           });
         });
     },
-    fetchUserCertifications(): void {
+    fetchExpertCertifications(): void {
       $http
-        .get("/profile/certification")
+        .get("/expert-profile/" + this.expertProfileId + "/certification")
         .then(({ data }) => {
-          console.log(data.certifications as UserCertificationDTO[]);
           this.awardsAndCertifications = data.certifications.map(
             (cert: IUserCertificationDTO) => new UserCertificationDTO(cert)
           );
