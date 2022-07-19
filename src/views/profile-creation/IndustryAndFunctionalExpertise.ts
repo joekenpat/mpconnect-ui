@@ -50,6 +50,7 @@ export default Vue.extend({
         industry_experiences: [] as UserIndustryOrSkillDTO[],
         functional_skills: [] as UserIndustryOrSkillDTO[],
       },
+      formErrors: {} as { [key: string]: string[] },
     };
   },
   created() {
@@ -122,7 +123,7 @@ export default Vue.extend({
         .catch((error) => {
           console.error({ error });
           if (error.request.status === 422) {
-            console.error({ errors: error.response.data.errors });
+            this.formErrors = error.response.data.errors
           }
           this.$toast.open({
             type: "error",

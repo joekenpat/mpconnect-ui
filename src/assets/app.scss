@@ -1198,16 +1198,14 @@ input.check-font {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.work-status {
+.well-radio {
+  padding: 20px;
+  font-size: 17px;
   border: #e43232 1px solid;
   border-radius: 5px;
-  margin: 20px;
-}
-.well-radio {
-  border: #a19e9e 1px solid;
-  padding: 20px;
-  margin: 20px auto;
-  font-size: 17px;
+  &.active {
+    background-color: #fef4f4;
+  }
 }
 #step2-form-list {
   a {

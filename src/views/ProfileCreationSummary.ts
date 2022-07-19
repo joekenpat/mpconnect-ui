@@ -4,6 +4,7 @@ import {
   UserInterestDTO,
   UserPersonalInfoDTO,
   UserShortBioDTO,
+  UserWorkStatusDTO,
 } from "@/services/UserDTO";
 import avatar from "@/assets/avatar.png";
 
@@ -27,10 +28,7 @@ import {
   UserCertificationDTO,
 } from "@/services/CertificationDTO";
 import { numberToMonthName } from "@/services/CalendarMonthUtil";
-import {
-  ExpertProfileDTO,
-  IExpertProfileDTO,
-} from "@/services/ExpertProfileDTO";
+import { ExpertProfileDTO } from "@/services/ExpertProfileDTO";
 
 export default Vue.extend({
   data() {
@@ -58,6 +56,7 @@ export default Vue.extend({
       functional_skills: [] as UserIndustryOrSkillDTO[],
       awardsAndCertifications: [] as UserCertificationDTO[],
       expertProfiles: [] as ExpertProfileDTO[],
+      workStatus: {} as UserWorkStatusDTO,
     };
   },
   created() {
@@ -66,7 +65,7 @@ export default Vue.extend({
     this.fetchUserProjectReferences();
     this.fetchUserWorkExperiences();
     this.fetchUserCertifications();
-  },
+    },
   methods: {
     ...mapActions(["setAuthUser"]),
     numberToMonth(number: number) {
@@ -79,7 +78,8 @@ export default Vue.extend({
           this.personalInformation = new UserPersonalInfoDTO(data.user);
           this.userBio = new UserShortBioDTO(data.user);
           this.interest = new UserInterestDTO(data.user);
-
+          this.workStatus = new UserWorkStatusDTO(data.user);
+          console.log(typeof this.workStatus.preferred_job_countries)
           this.fullName = [
             this.personalInformation.first_name,
             this.personalInformation.last_name,
@@ -94,11 +94,11 @@ export default Vue.extend({
           });
         });
     },
+
     fetchUserIndustryOrSkills(): void {
       $http
         .get("/profile/skill")
         .then(({ data }) => {
-          console.log(data.skills as UserIndustryOrSkillDTO[]);
           this.functional_skills = data.skills
             .map(
               (skill: IUserIndustryOrSkillDTO) =>
@@ -130,7 +130,6 @@ export default Vue.extend({
       $http
         .get("/profile/work-experience")
         .then(({ data }) => {
-          console.log(data.work_experiences as UserWorkExperienceDTO[]);
           this.workExperiences = data.work_experiences.map(
             (experience: IUserWorkExperienceDTO) =>
               new UserWorkExperienceDTO(experience)
@@ -149,7 +148,6 @@ export default Vue.extend({
       $http
         .get("/profile/project-reference")
         .then(({ data }) => {
-          console.log(data.project_references as UserProjectReferenceDTO[]);
           this.projectReferences = data.project_references.map(
             (experience: IUserProjectReferenceDTO) =>
               new UserProjectReferenceDTO(experience)
@@ -168,7 +166,6 @@ export default Vue.extend({
       $http
         .get("/profile/certification")
         .then(({ data }) => {
-          console.log(data.certifications as UserCertificationDTO[]);
           this.awardsAndCertifications = data.certifications.map(
             (cert: IUserCertificationDTO) => new UserCertificationDTO(cert)
           );

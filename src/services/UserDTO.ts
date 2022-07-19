@@ -48,7 +48,7 @@ export class UserPersonalInfoDTO implements IUserPersonalInfoDTO {
   mobile_phone: null | string;
   current_job_title: null | string;
   years_of_work_experience: null | string;
-  countries_of_work_experience: string [];
+  countries_of_work_experience: string[];
   hands_on_technology: string[] = [];
   utm_medium: null | string;
   name_of_professional: null | string;
@@ -65,7 +65,9 @@ export class UserPersonalInfoDTO implements IUserPersonalInfoDTO {
     this.mobile_phone = data.mobile_phone;
     this.current_job_title = data.current_job_title;
     this.years_of_work_experience = data.years_of_work_experience;
-    this.countries_of_work_experience = data.countries_of_work_experience ? data.countries_of_work_experience : [];
+    this.countries_of_work_experience = data.countries_of_work_experience
+      ? data.countries_of_work_experience
+      : [];
     this.hands_on_technology = data.hands_on_technology
       ? data.hands_on_technology
       : [];
@@ -105,6 +107,38 @@ export class UserInterestDTO implements IUserInterestDTO {
       : [];
     this.topic_of_interests = data.topic_of_interests
       ? data.topic_of_interests
+      : [];
+  }
+}
+
+export interface IUserWorkStatusDTO {
+  id: number;
+  current_job_status: string | null;
+  available_for_job_from: string | null;
+  available_for_fulltime_job_from: string | null;
+  preferred_job_location_type: string | null;
+  preferred_job_hours_per_week: number | null;
+  preferred_job_countries: string[];
+}
+
+export class UserWorkStatusDTO implements IUserWorkStatusDTO {
+  id: number;
+  current_job_status: string | null;
+  available_for_job_from: string | null;
+  available_for_fulltime_job_from: string | null;
+  preferred_job_location_type: string | null;
+  preferred_job_hours_per_week: number | null;
+  preferred_job_countries: string[];
+
+  constructor(data: IUserWorkStatusDTO) {
+    this.id = data.id;
+    this.current_job_status = data.current_job_status;
+    this.available_for_job_from = data.available_for_job_from;
+    this.available_for_fulltime_job_from = data.available_for_fulltime_job_from;
+    this.preferred_job_location_type = data.preferred_job_location_type;
+    this.preferred_job_hours_per_week = data.preferred_job_hours_per_week;
+    this.preferred_job_countries = data.preferred_job_countries
+      ? data.preferred_job_countries
       : [];
   }
 }
