@@ -162,10 +162,7 @@ const router = new VueRouter({
         },
         {
           path: "*",
-          redirect: (to) =>
-            `/expert-profile/${
-              to.params.expertProfileId || "0"
-            }/personal-information`,
+          redirect: "/profile-creation-summary",
         },
       ],
     },
@@ -184,7 +181,7 @@ router.beforeEach((to, from, next) => {
       },
     });
   } else if (current_user && guest_only_routes.includes(to.path)) {
-    next("/profile-creation");
+    next("/profile-creation-summary");
   } else if (auth_is_required && current_user) {
     if (to.path === "/auth/sign-out") {
       store.dispatch("setAuthUser", undefined);

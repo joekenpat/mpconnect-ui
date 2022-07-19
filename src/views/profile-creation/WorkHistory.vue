@@ -93,11 +93,12 @@
               </ul>
             </div>
             <div class="form-group col-sm-6">
-              <label :for="`startDate_${we}`">START DATE</label>
+              <label :for="`startDate_${we}`">START MONTH</label>
               <multiselect
                 :id="`startDate_${we}`"
                 :name="`startDate_${we}`"
                 placeholder="Select start date"
+                :custom-label="numberToMonth"
                 v-model="workExperiences[we].start_month"
                 :options="monthDurationOptions"
               >
@@ -133,11 +134,12 @@
               v-show="!workExperiences[we].is_current_role"
               class="form-group col-sm-6"
             >
-              <label :for="`endDate_${we}`">END DATE</label>
+              <label :for="`endDate_${we}`">END MONTH</label>
               <multiselect
                 :id="`endDate_${we}`"
                 :name="`endDate_${we}`"
                 placeholder="Select end date"
+                :custom-label="numberToMonth"
                 v-model="workExperiences[we].end_month"
                 :options="monthDurationOptions"
               >

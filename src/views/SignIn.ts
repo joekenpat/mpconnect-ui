@@ -38,9 +38,14 @@ export default Vue.extend({
           this.setAuthUser({
             email: data.user.email,
             auth_token: data.token,
-          }),
+          });
+          if (data.first_sign_in === true || data.first_sign_in === "true") {
+            this.$router.push("/profile-creation-summary");
+          } else {
             this.$router.push("/profile-creation/personal-information");
-        }).catch((error) => {
+          }
+        })
+        .catch((error) => {
           console.error({ error });
           if (error.request.status === 422) {
             this.formErrors = error.response.data.errors;

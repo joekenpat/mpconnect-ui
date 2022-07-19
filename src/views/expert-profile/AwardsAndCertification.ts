@@ -84,10 +84,7 @@ export default Vue.extend({
             message: data.message,
             duration: 5000,
           });
-          this.$router.push({
-            name: "expert-profile-personal-information",
-            params: { expertProfileId: this.expertProfileId.toString() },
-          });
+          this.$router.push({ name: "profile-creation-summary" });
         })
         .catch((error) => {
           console.error({ error });

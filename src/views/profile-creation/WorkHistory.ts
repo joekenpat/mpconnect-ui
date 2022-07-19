@@ -9,6 +9,7 @@ import Vue from "vue";
 import Multiselect from "vue-multiselect";
 import { jsonToFormData } from "@/services/JsonToFormData";
 import { isEqual } from "lodash";
+import { numberToMonthName } from "@/services/CalendarMonthUtil";
 
 export default Vue.extend({
   data() {
@@ -44,6 +45,9 @@ export default Vue.extend({
       return Array(N)
         .fill(startAt - 1)
         .map((v, i) => v + (i + 1));
+    },
+    numberToMonth(number: number) {
+      return numberToMonthName(number);
     },
     fetchUserWorkExperiences(): void {
       $http
