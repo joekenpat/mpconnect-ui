@@ -15,6 +15,7 @@ const HTTP_CONFIG: AxiosRequestConfig = {
 
 const $http: AxiosInstance = axios.create(HTTP_CONFIG);
 $http.interceptors.request.use((config) => {
+  store.dispatch("setLoading", true);
   const jwtToken = store.state.auth_user?.auth_token || undefined;
   if (jwtToken) {
     config.headers = {
@@ -25,6 +26,11 @@ $http.interceptors.request.use((config) => {
   } else {
     return config;
   }
+});
+
+$http.interceptors.response.use((response) => {
+  store.dispatch("setLoading", false);
+  return response;
 });
 
 export { $http };
