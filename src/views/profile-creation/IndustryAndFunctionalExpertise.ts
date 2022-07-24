@@ -1,6 +1,8 @@
 import { $http } from "@/services/http-common";
 import {
+  industries,
   IUserIndustryOrSkillDTO,
+  skills,
   UserIndustryOrSkillDTO
 } from "@/services/IndustryExperienceDTO";
 import { jsonToFormData } from "@/services/JsonToFormData";
@@ -10,20 +12,7 @@ import Multiselect from "vue-multiselect";
 export default Vue.extend({
   data() {
     return {
-      functionalSkillsOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-        "JavaScript",
-        "Python",
-        "UX/UI",
-        "Product Development",
-        "Dev Ops",
-        "Quality Assurance",
-        "Story telling",
-        "Team leader",
-      ].map(
+      functionalSkillsOptions: skills.map(
         (name) =>
           new UserIndustryOrSkillDTO({
             id: null,
@@ -31,14 +20,7 @@ export default Vue.extend({
             type: "functional_skill",
           })
       ),
-      handsOnTechnologyOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-        "Scala",
-        "Vue.js",
-      ].map(
+      handsOnTechnologyOptions: industries.map(
         (name) =>
           new UserIndustryOrSkillDTO({
             id: null,

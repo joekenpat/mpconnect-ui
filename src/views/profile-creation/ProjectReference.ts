@@ -1,4 +1,5 @@
 import { $http } from "@/services/http-common";
+import { skills } from "@/services/IndustryExperienceDTO";
 import { jsonToFormData } from "@/services/JsonToFormData";
 import {
     EmptyUserProjectReferenceDTO,
@@ -12,12 +13,7 @@ import Multiselect from "vue-multiselect";
 export default Vue.extend({
   data() {
     return {
-      functionalSkillsOptions: [
-        "Adobe illustrator",
-        "Sketch",
-        "PHP Development",
-        "WordPress",
-      ],
+      functionalSkillsOptions: skills,
       projectReferences: [
         EmptyUserProjectReferenceDTO(),
       ] as UserProjectReferenceDTO[],
