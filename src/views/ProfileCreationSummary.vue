@@ -9,7 +9,7 @@
           <div class="profile-section vertical-margin-5">
             <div class="flex-row">
               <img
-                :src="avatar"
+                :src="personalInformation?.profile_image || avatar"
                 class="profile-picture"
                 alt="Profile Picture"
               />
@@ -177,10 +177,14 @@
                 </li>
               </ul>
             </div>
-            <a href="#" class="side-margin-10 file-link"
-              ><span class="fa fa-file-pdf-o red-font pad-10"></span
-              >Project_case_Study_doc.pdf</a
-            >
+            <a
+              v-if="prValue.document_file"
+              :href="prValue.document_file || '#'"
+              target="_blank"
+              class="side-margin-10 file-link"
+              ><span class="fa fa-file-o red-font pad-10"></span>
+              {{ filenameFromPath(prValue.document_file || "") }}
+            </a>
             <p class="lightgray-font pad-10">
               {{ prValue.description }}
             </p>
@@ -307,10 +311,14 @@
             <p class="lightgray-font pad-10">
               {{ aacValue.description }}
             </p>
-            <a href="#" class="side-margin-10 file-link"
-              ><span class="fa fa-file-pdf-o red-font pad-10"></span
-              >Project_case_Study_doc.pdf</a
-            >
+            <a
+              v-if="aacValue.proof_file"
+              :href="aacValue.proof_file || '#'"
+              target="_blank"
+              class="side-margin-10 file-link"
+              ><span class="fa fa-file-o red-font pad-10"></span>
+              {{ filenameFromPath(aacValue.proof_file || "") }}
+            </a>
           </div>
         </div>
         <div class="bio-section">

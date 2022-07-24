@@ -1,11 +1,10 @@
+import avatar from "@/assets/avatar.png";
 import { $http } from "@/services/http-common";
 import { jsonToFormData } from "@/services/JsonToFormData";
-import { UserInterestDTO } from "@/services/UserDTO";
-import avatar from "@/assets/avatar.png";
 
+import { isEmpty } from "lodash";
 import Vue from "vue";
 import { mapActions } from "vuex";
-import { isEmpty } from "lodash";
 
 export default Vue.extend({
   data() {
@@ -47,7 +46,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             this.formErrors = error.response.data.errors;
           }
           this.$toast.open({
@@ -55,6 +54,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

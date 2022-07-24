@@ -9,7 +9,7 @@
           <div class="profile-section vertical-margin-5">
             <div class="flex-row">
               <img
-                :src="avatar"
+                :src="personalInformation?.profile_image || avatar"
                 class="profile-picture"
                 alt="Profile Picture"
               />

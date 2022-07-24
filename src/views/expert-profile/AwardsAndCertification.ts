@@ -1,12 +1,12 @@
-import Multiselect from "vue-multiselect";
-import Vue from "vue";
-import { UserProjectReferenceDTO } from "@/services/ProjectReferenceDTO";
-import { $http } from "@/services/http-common";
-import { jsonToFormData } from "@/services/JsonToFormData";
 import {
   IUserCertificationDTO,
-  UserCertificationDTO,
+  UserCertificationDTO
 } from "@/services/CertificationDTO";
+import { $http } from "@/services/http-common";
+import { jsonToFormData } from "@/services/JsonToFormData";
+import { UserProjectReferenceDTO } from "@/services/ProjectReferenceDTO";
+import Vue from "vue";
+import Multiselect from "vue-multiselect";
 
 export default Vue.extend({
   props: {
@@ -46,6 +46,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchExpertCertifications(): void {
@@ -67,6 +69,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     updateExpertCertifications(): void {
@@ -88,7 +92,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             console.error({ errors: error.response.data.errors });
           }
           this.$toast.open({
@@ -96,6 +100,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

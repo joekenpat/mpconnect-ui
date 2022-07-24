@@ -1,34 +1,32 @@
+import avatar from "@/assets/avatar.png";
 import { $http } from "@/services/http-common";
-import { jsonToFormData } from "@/services/JsonToFormData";
 import {
   UserInterestDTO,
   UserPersonalInfoDTO,
   UserShortBioDTO,
-  UserWorkStatusDTO,
+  UserWorkStatusDTO
 } from "@/services/UserDTO";
-import avatar from "@/assets/avatar.png";
 
-import Vue from "vue";
-import { mapActions, mapGetters, mapState } from "vuex";
-import { isEmpty } from "lodash";
-import {
-  IUserWorkExperienceDTO,
-  UserWorkExperienceDTO,
-} from "@/services/WorkExperienceDTO";
-import {
-  IUserProjectReferenceDTO,
-  UserProjectReferenceDTO,
-} from "@/services/ProjectReferenceDTO";
-import {
-  IUserIndustryOrSkillDTO,
-  UserIndustryOrSkillDTO,
-} from "@/services/IndustryExperienceDTO";
+import { numberToMonthName } from "@/services/CalendarMonthUtil";
 import {
   IUserCertificationDTO,
-  UserCertificationDTO,
+  UserCertificationDTO
 } from "@/services/CertificationDTO";
-import { numberToMonthName } from "@/services/CalendarMonthUtil";
 import { ExpertProfileDTO } from "@/services/ExpertProfileDTO";
+import {
+  IUserIndustryOrSkillDTO,
+  UserIndustryOrSkillDTO
+} from "@/services/IndustryExperienceDTO";
+import {
+  IUserProjectReferenceDTO,
+  UserProjectReferenceDTO
+} from "@/services/ProjectReferenceDTO";
+import {
+  IUserWorkExperienceDTO,
+  UserWorkExperienceDTO
+} from "@/services/WorkExperienceDTO";
+import Vue from "vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
   data() {
@@ -92,6 +90,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
 
@@ -124,6 +124,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchUserWorkExperiences(): void {
@@ -142,7 +144,12 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
+    },
+    filenameFromPath(path: string): string {
+      return path.split('/').pop()?.split('#')?.shift()?.split('?').shift() || "#";
     },
     fetchUserProjectReferences(): void {
       $http
@@ -160,6 +167,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchUserCertifications(): void {
@@ -177,6 +186,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

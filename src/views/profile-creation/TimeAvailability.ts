@@ -43,6 +43,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     updateUserWorkStatus(): void {
@@ -60,7 +62,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             this.formErrors = error.response.data.errors
           }
           this.$toast.open({
@@ -68,6 +70,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

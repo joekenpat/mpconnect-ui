@@ -1,14 +1,16 @@
 export interface IUserCertificationDTO {
   id: null | number;
   title: string;
-  proof_file?: File | String;
+  proof_file: null | string;
+  new_proof_file?: File;
   description: string;
 }
 
 export class UserCertificationDTO implements IUserCertificationDTO {
   id: null | number;
   title: string;
-  proof_file?: File | String;
+  proof_file: null | string;
+  new_proof_file?: File;
   description: string;
 
   constructor(data: IUserCertificationDTO) {
@@ -23,6 +25,7 @@ export const EmptyUserCertificationDTO = (): IUserCertificationDTO =>
   new UserCertificationDTO({
     id: null,
     title: "",
-    proof_file: undefined,
+    proof_file: "",
+    new_proof_file: undefined,
     description: "",
   });

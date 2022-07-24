@@ -1,38 +1,33 @@
+import avatar from "@/assets/avatar.png";
 import { $http } from "@/services/http-common";
-import { jsonToFormData } from "@/services/JsonToFormData";
 import {
   UserInterestDTO,
   UserPersonalInfoDTO,
-  UserShortBioDTO,
+  UserShortBioDTO
 } from "@/services/UserDTO";
-import avatar from "@/assets/avatar.png";
 
-import Vue from "vue";
-import { mapActions, mapGetters, mapState } from "vuex";
-import { isEmpty } from "lodash";
-import {
-  IUserWorkExperienceDTO,
-  UserWorkExperienceDTO,
-} from "@/services/WorkExperienceDTO";
-import {
-  IUserProjectReferenceDTO,
-  UserProjectReferenceDTO,
-} from "@/services/ProjectReferenceDTO";
-import {
-  ExpertIndustryOrSkillDTO,
-  IExpertIndustryOrSkillDTO,
-  IUserIndustryOrSkillDTO,
-  UserIndustryOrSkillDTO,
-} from "@/services/IndustryExperienceDTO";
-import {
-  IUserCertificationDTO,
-  UserCertificationDTO,
-} from "@/services/CertificationDTO";
 import { numberToMonthName } from "@/services/CalendarMonthUtil";
 import {
+  IUserCertificationDTO,
+  UserCertificationDTO
+} from "@/services/CertificationDTO";
+import {
   ExpertProfileDTO,
-  IExpertProfileDTO,
+  IExpertProfileDTO
 } from "@/services/ExpertProfileDTO";
+import {
+  ExpertIndustryOrSkillDTO,
+  IExpertIndustryOrSkillDTO, UserIndustryOrSkillDTO
+} from "@/services/IndustryExperienceDTO";
+import {
+  IUserProjectReferenceDTO,
+  UserProjectReferenceDTO
+} from "@/services/ProjectReferenceDTO";
+import {
+  UserWorkExperienceDTO
+} from "@/services/WorkExperienceDTO";
+import Vue from "vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
   props: {
@@ -110,7 +105,9 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
-        });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
+        });;
     },
     fetchExpertProfiles(): void {
       $http
@@ -127,6 +124,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchExpertIndustryOrSkills(): void {
@@ -159,6 +158,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchExpertProjectReferences(): void {
@@ -177,6 +178,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     fetchExpertCertifications(): void {
@@ -194,6 +197,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

@@ -19,6 +19,13 @@
                 :name="`name_of_client_${pr}`"
                 v-model="projectReferences[pr].name_of_client"
               />
+              <template
+                v-for="(msg, fe) in formErrors[
+                  'project_references.' + pr + '.name_of_client'
+                ]"
+              >
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="form-group col-sm-6">
               <label :for="`industry_${pr}`">INDUSTRY</label>
@@ -30,6 +37,13 @@
                 :name="`industry_${pr}`"
                 v-model="projectReferences[pr].industry"
               />
+              <template
+                v-for="(msg, fe) in formErrors[
+                  'project_references.' + pr + '.industry'
+                ]"
+              >
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="form-group col-sm-12">
               <label :for="`description_${pr}`">DESCRIPTION</label>
@@ -41,6 +55,13 @@
                 placeholder="Enter description here"
                 v-model="projectReferences[pr].description"
               ></textarea>
+              <template
+                v-for="(msg, fe) in formErrors[
+                  'project_references.' + pr + '.description'
+                ]"
+              >
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
             <div class="form-group col-sm-12">
               <label :for="`functional_skills_${pr}`">FUNCTIONAL SKILLS</label>
@@ -63,6 +84,13 @@
                     >{{ values.length }} options selected</span
                   ></template
                 >
+                <template
+                  v-for="(msg, fe) in formErrors[
+                    'project_references.' + pr + '.functional_skills'
+                  ]"
+                >
+                  <span class="red-font" :key="fe"> {{ msg }} </span>
+                </template>
               </multiselect>
             </div>
             <div class="hands-on-technology col-sm-12">
@@ -87,6 +115,11 @@
               <label :for="`document_file_${pr}`"
                 >UPLOAD PROJECT DOCUMENT</label
               >
+              <a
+                v-if="projectReferences[pr].document_file"
+                :href="projectReferences[pr].document_file || '#'"
+                target="_blank"
+              > {{ filenameFromPath(projectReferences[pr].document_file || ("")) }} </a>
               <input
                 v-show="false"
                 type="file"
@@ -104,6 +137,13 @@
                 <span class="fa fa-cloud-upload"></span>
                 {{ uploadedFileName(pr) }}
               </button>
+              <template
+                v-for="(msg, fe) in formErrors[
+                  'project_references.' + pr + '.new_document_file'
+                ]"
+              >
+                <span class="red-font" :key="fe"> {{ msg }} </span>
+              </template>
             </div>
           </div>
         </template>

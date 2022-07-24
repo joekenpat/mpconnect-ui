@@ -23,6 +23,7 @@ export interface IUserPersonalInfoDTO {
   first_name: null | string;
   last_name: null | string;
   profile_image: null | string;
+  new_profile_image?: File;
   gender: null | string;
   nationality: null | string;
   current_address: null | string;
@@ -42,6 +43,7 @@ export class UserPersonalInfoDTO implements IUserPersonalInfoDTO {
   first_name: null | string;
   last_name: null | string;
   profile_image: null | string;
+  new_profile_image?: File;
   gender: null | string;
   nationality: null | string;
   current_address: null | string;

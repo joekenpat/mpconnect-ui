@@ -1,7 +1,7 @@
 import { $http } from "@/services/http-common";
 import {
   ExpertIndustryOrSkillDTO,
-  IExpertIndustryOrSkillDTO,
+  IExpertIndustryOrSkillDTO
 } from "@/services/IndustryExperienceDTO";
 import { jsonToFormData } from "@/services/JsonToFormData";
 import Vue from "vue";
@@ -106,6 +106,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     updateExpertIndustryOrSkills(): void {
@@ -132,7 +134,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             console.error({ errors: error.response.data.errors });
           }
           this.$toast.open({
@@ -140,6 +142,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

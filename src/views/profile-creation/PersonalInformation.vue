@@ -8,8 +8,22 @@
           class="profile-picture"
           alt="Profile Picture"
         />
-        <button type="button" class="btn upload-profile-btn">
-          <span class="fa fa-plus"></span> Upload New
+        <input
+          v-show="false"
+          type="file"
+          id="new_profile_image"
+          name="new_profile_image"
+          @change="getUploadedDocument"
+        />
+        <button
+          type="button"
+          id="profile_image_selector"
+          name="profile_image_selector"
+          @click="handleDocumentSelect"
+          class="btn upload-profile-btn"
+        >
+          <span class="fa fa-cloud-upload"></span>
+          {{ uploadedFileName() }}
         </button>
       </div>
     </div>

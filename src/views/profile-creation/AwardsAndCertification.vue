@@ -19,6 +19,13 @@
                 :name="`title_${ac}`"
                 v-model="awardsAndCertifications[ac].title"
               />
+              <template
+                  v-for="(msg, fe) in formErrors[
+                    'certifications.' + ac + '.title'
+                  ]"
+                >
+                  <span class="red-font" :key="fe"> {{ msg }} </span>
+                </template>
             </div>
             <div class="form-group col-sm-12">
               <label :for="`description_${ac}`">DESCRIPTION</label>
@@ -30,26 +37,45 @@
                 placeholder="Enter description here"
                 v-model="awardsAndCertifications[ac].description"
               ></textarea>
+              <template
+                  v-for="(msg, fe) in formErrors[
+                    'certifications.' + ac + '.description'
+                  ]"
+                >
+                  <span class="red-font" :key="fe"> {{ msg }} </span>
+                </template>
             </div>
             <div class="form-group col-sm-12">
-              <label :for="`proof_file${ac}`">ATTACH FILES FOR PROOF</label>
+              <label :for="`proof_file_${ac}`">ATTACH FILES FOR PROOF</label>
+              <a
+                v-if="awardAndCert.proof_file"
+                :href="awardAndCert.proof_file || '#'"
+                target="_blank"
+              > {{ filenameFromPath(awardAndCert.proof_file || ("")) }} </a>
               <input
                 v-show="false"
                 type="file"
-                :id="`proof_file${ac}`"
-                :name="`proof_file${ac}`"
+                :id="`proof_file_${ac}`"
+                :name="`proof_file_${ac}`"
                 @change="getUploadedDocument(ac)"
               />
               <button
                 type="button"
-                :id="`document_selector_${ac}`"
-                :name="`document_selector_${ac}`"
+                :id="`proof_file_selector_${ac}`"
+                :name="`proof_file_selector_${ac}`"
                 @click="handleDocumentSelect(ac)"
                 class="btn btn-block upload-project-document"
               >
                 <span class="fa fa-cloud-upload"></span>
                 {{ uploadedFileName(ac) }}
               </button>
+              <template
+                  v-for="(msg, fe) in formErrors[
+                    'certifications.' + ac + '.title'
+                  ]"
+                >
+                  <span class="red-font" :key="fe"> {{ msg }} </span>
+                </template>
             </div>
           </div>
         </template>

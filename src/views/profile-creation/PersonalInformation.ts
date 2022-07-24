@@ -1,11 +1,11 @@
+import avatar from "@/assets/avatar.png";
+import { countries } from "@/services/Countries";
+import { $http } from "@/services/http-common";
+import { jsonToFormData } from "@/services/JsonToFormData";
+import { languages } from "@/services/Languages";
+import { UserPersonalInfoDTO } from "@/services/UserDTO";
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
-import avatar from "@/assets/avatar.png";
-import { $http } from "@/services/http-common";
-import { UserPersonalInfoDTO } from "@/services/UserDTO";
-import { jsonToFormData } from "@/services/JsonToFormData";
-import { countries } from "@/services/Countries";
-import { languages } from "@/services/Languages";
 export default Vue.extend({
   data() {
     return {
@@ -63,11 +63,30 @@ export default Vue.extend({
         fluency: "",
       });
     },
+    getUploadedDocument(): void {
+      const el = this.$el.querySelector(
+        '#new_profile_image'
+      ) as HTMLInputElement;
+      const selectedFile = el.files?.[0];
+
+      this.personalInformation.new_profile_image = selectedFile;
+    },
+    handleDocumentSelect(): void {
+      const el = this.$el.querySelector(
+        '#new_profile_image'
+      ) as HTMLInputElement;
+      if (el) {
+        el.click();
+      }
+    },
+    uploadedFileName(): string {
+      const fileSelected = this.personalInformation.new_profile_image as File;
+      return fileSelected ? fileSelected.name : "Upload new";
+    },
     fetchUserDetail(): void {
       $http
         .get("/profile")
         .then(({ data }) => {
-          console.log(new UserPersonalInfoDTO(data.user));
           this.personalInformation = new UserPersonalInfoDTO(data.user);
           this.fullName = [
             this.personalInformation.first_name,
@@ -81,6 +100,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     updateUserPersonalInformation(): void {
@@ -99,7 +120,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             this.formErrors = error.response.data.errors;
           }
           this.$toast.open({
@@ -107,6 +128,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

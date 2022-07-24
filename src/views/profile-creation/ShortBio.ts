@@ -1,8 +1,8 @@
+import { $http } from "@/services/http-common";
+import { jsonToFormData } from "@/services/JsonToFormData";
+import { UserShortBioDTO } from "@/services/UserDTO";
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
-import { $http } from "@/services/http-common";
-import { UserShortBioDTO } from "@/services/UserDTO";
-import { jsonToFormData } from "@/services/JsonToFormData";
 export default Vue.extend({
   data() {
     return {
@@ -33,6 +33,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     updateShortBio(): void {
@@ -48,7 +50,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             this.formErrors = error.response.data.errors;
           }
           this.$toast.open({
@@ -56,6 +58,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },

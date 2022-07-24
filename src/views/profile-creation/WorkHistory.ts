@@ -1,15 +1,13 @@
+import { numberToMonthName } from "@/services/CalendarMonthUtil";
+import { $http } from "@/services/http-common";
+import { jsonToFormData } from "@/services/JsonToFormData";
 import {
   EmptyUserWorkExperienceDTO,
-  IUserWorkExperienceDTO,
-  IUserWorkExperienceErrorsDTO,
-  UserWorkExperienceDTO,
+  IUserWorkExperienceDTO, UserWorkExperienceDTO
 } from "@/services/WorkExperienceDTO";
-import { $http } from "@/services/http-common";
+import { isEqual } from "lodash";
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
-import { jsonToFormData } from "@/services/JsonToFormData";
-import { isEqual } from "lodash";
-import { numberToMonthName } from "@/services/CalendarMonthUtil";
 
 export default Vue.extend({
   data() {
@@ -69,6 +67,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
     removeHandsOnTechnologyValue(experienceIndex: number, index: number): void {
@@ -100,7 +100,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.error({ error });
-          if (error.request.status === 422) {
+          if (error.response.status === 422) {
             console.error({ errors: error.response.data.errors });
           }
           this.$toast.open({
@@ -108,6 +108,8 @@ export default Vue.extend({
             message: error.response.data.message,
             duration: 5000,
           });
+        }).finally(() => {
+          this.$store.dispatch("setLoading", false);
         });
     },
   },
